@@ -1,0 +1,121 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "とくせんリンゴジュース",
+      "type": "デザート",
+      "power": 85,
+      "ingredients": [
+        { "name": "あまいミツ", "quantity": 7 }
+      ],
+      "effect": "おてつだい時間短縮",
+      "imageUrl": "/images/recipes/apple-juice.png"
+    },
+    {
+      "id": 2,
+      "name": "マメバーグカレー",
+      "type": "カレー",
+      "power": 1560,
+      "ingredients": [
+        { "name": "マメミート", "quantity": 7 },
+        { "name": "とくせんエッグ", "quantity": 4 }
+      ],
+      "effect": "エナジー獲得量アップ",
+      "imageUrl": "/images/recipes/bean-burger-curry.png"
+    },
+    {
+      "id": 3,
+      "name": "とくせんフルーツサラダ",
+      "type": "サラダ",
+      "power": 450,
+      "ingredients": [
+        { "name": "あまいミツ", "quantity": 3 },
+        { "name": "モモのみ", "quantity": 8 },
+        { "name": "ウブのみ", "quantity": 5 }
+      ],
+      "effect": "おてつだいスピード up",
+      "imageUrl": "/images/recipes/fruit-salad.png"
+    },
+    {
+      "id": 4,
+      "name": "ミックスサラダ",
+      "type": "サラダ",
+      "power": 280,
+      "ingredients": [
+        { "name": "モモのみ", "quantity": 5 },
+        { "name": "オレンのみ", "quantity": 8 }
+      ],
+      "effect": "おてつだいスピード up",
+      "imageUrl": "/images/recipes/mixed-salad.png"
+    },
+    {
+      "id": 5,
+      "name": "ネムリムのパンケーキ",
+      "type": "デザート",
+      "power": 650,
+      "ingredients": [
+        { "name": "とくせんエッグ", "quantity": 6 },
+        { "name": "あまいミツ", "quantity": 9 }
+      ],
+      "effect": "スキル発生率 up",
+      "imageUrl": "/images/recipes/pancake.png"
+    },
+    {
+      "id": 6,
+      "name": "カビゴンカレー",
+      "type": "カレー",
+      "power": 2890,
+      "ingredients": [
+        { "name": "マメミート", "quantity": 8 },
+        { "name": "ふといながねぎ", "quantity": 5 },
+        { "name": "ワカクサコーン", "quantity": 4 }
+      ],
+      "effect": "エナジー獲得量アップ",
+      "imageUrl": "/images/recipes/snorlax-curry.png"
+    },
+    {
+      "id": 7,
+      "name": "スイートサラダ",
+      "type": "サラダ",
+      "power": 370,
+      "ingredients": [
+        { "name": "あまいミツ", "quantity": 4 },
+        { "name": "モモのみ", "quantity": 6 }
+      ],
+      "effect": "おてつだいスピード up"
+    },
+    {
+      "id": 8,
+      "name": "ベジタブルカレー",
+      "type": "カレー",
+      "power": 1120,
+      "ingredients": [
+        { "name": "ワカクサコーン", "quantity": 7 },
+        { "name": "ふといながねぎ", "quantity": 5 }
+      ],
+      "effect": "エナジー獲得量アップ"
+    },
+    {
+      "id": 9,
+      "name": "フルーツパフェ",
+      "type": "デザート",
+      "power": 720,
+      "ingredients": [
+        { "name": "モモのみ", "quantity": 10 },
+        { "name": "ウブのみ", "quantity": 7 },
+        { "name": "あまいミツ", "quantity": 5 }
+      ],
+      "effect": "スキル発生率 up"
+    },
+    {
+      "id": 10,
+      "name": "シンプルカレー",
+      "type": "カレー",
+      "power": 890,
+      "ingredients": [
+        { "name": "マメミート", "quantity": 5 }
+      ],
+      "effect": "エナジー獲得量アップ"
+    }
+  ]
+}
