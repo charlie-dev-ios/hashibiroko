@@ -20,6 +20,31 @@ bun install
 bun dev
 ```
 
+## コード品質
+
+### Linter & Formatter
+
+[Biome](https://biomejs.dev/) を使用してコードのリンティングとフォーマットを行います。
+
+```bash
+# リント実行
+bun run lint
+
+# リント自動修正
+bun run lint:fix
+
+# フォーマット確認
+bun run format
+
+# フォーマット適用
+bun run format:fix
+
+# リント + フォーマット + インポート整理（推奨）
+bun run check:fix
+```
+
+VSCodeを使用している場合、保存時に自動フォーマットが適用されます。
+
 ## プロジェクト構成
 
 ```

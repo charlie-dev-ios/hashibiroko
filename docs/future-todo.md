@@ -1,2 +1,2 @@
-- [ ] biomeを用いてLinterとFormatterを導入
+- [x] biomeを用いてLinterとFormatterを導入
 - [ ] turboのタスク定義を精査、最適化する

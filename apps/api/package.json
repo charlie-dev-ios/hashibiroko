@@ -1,7 +1,10 @@
 {
   "name": "api",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "check": "biome check ."
   },
   "dependencies": {
     "hono": "^4.11.2"
