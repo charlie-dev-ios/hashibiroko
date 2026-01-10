@@ -13,7 +13,12 @@
       "Bash(bun build:*)",
       "Bash(bun run build:*)",
       "mcp__serena__*",
-      "Skill(speckit.*)"
+      "Skill(speckit.*)",
+      "Skill(speckit.specify)",
+      "Bash(grep:*)",
+      "mcp__plugin_serena_serena__replace_content",
+      "mcp__plugin_serena_serena__activate_project",
+      "Skill(speckit.tasks)"
     ]
   }
 }

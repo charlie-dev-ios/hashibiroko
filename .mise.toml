@@ -1,2 +1,4 @@
 [tools]
 bun = "1.1.40"
+uv = "latest"
+
