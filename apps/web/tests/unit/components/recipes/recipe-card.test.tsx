@@ -46,7 +46,8 @@ describe('RecipeCard', () => {
       ],
     };
     render(<RecipeCard recipe={multiIngredientRecipe} />);
-    expect(screen.getByText(/合計.*11個/)).toBeInTheDocument();
+    expect(screen.getByText('必要食材の総数')).toBeInTheDocument();
+    expect(screen.getByText(/11個/)).toBeInTheDocument();
   });
 
   it('should render recipe effect', () => {

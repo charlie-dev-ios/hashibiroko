@@ -62,14 +62,20 @@ export function filterRecipesByType(recipes: Recipe[], type: RecipeType): Recipe
 
 /**
  * 食材でフィルタリング（AND条件: すべての食材を含む）
+ * @param recipes フィルター対象の料理リスト
+ * @param ingredientNames 検索する食材名のリスト
+ * @returns 指定されたすべての食材を含む料理のみを返す
  */
 export function filterRecipesByIngredients(recipes: Recipe[], ingredientNames: string[]): Recipe[] {
+  // 食材が指定されていない場合は全レシピを返す
   if (ingredientNames.length === 0) {
     return recipes;
   }
 
   return recipes.filter(recipe => {
+    // 料理に含まれる食材名をリストアップ
     const recipeIngredientNames = recipe.ingredients.map(i => i.name);
+    // 指定されたすべての食材が料理に含まれているかチェック (AND条件)
     return ingredientNames.every(name => recipeIngredientNames.includes(name));
   });
 }
@@ -84,14 +90,19 @@ export interface FilterOptions {
 
 /**
  * 複合フィルター（種別 + 食材）
+ * @param recipes フィルター対象の料理リスト
+ * @param options フィルターオプション（種別、食材）
+ * @returns フィルター条件に一致する料理のリスト
  */
 export function filterRecipes(recipes: Recipe[], options: FilterOptions): Recipe[] {
   let result = recipes;
 
+  // 種別フィルターが指定されている場合、まず種別で絞り込む
   if (options.type) {
     result = filterRecipesByType(result, options.type);
   }
 
+  // 食材フィルターが指定されている場合、さらに食材で絞り込む（AND条件）
   if (options.ingredients && options.ingredients.length > 0) {
     result = filterRecipesByIngredients(result, options.ingredients);
   }

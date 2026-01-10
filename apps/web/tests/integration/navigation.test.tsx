@@ -86,11 +86,13 @@ describe('Navigation Integration Tests', () => {
       expect(screen.getByText('ホーム')).toBeInTheDocument();
     });
 
-    it('should render Recipes page with placeholder', () => {
-      render(<RecipesPage />);
+    it('should render Recipes page with breadcrumb', async () => {
+      const page = await RecipesPage();
+      render(page);
 
-      expect(screen.getByRole('heading', { name: '料理情報', level: 1 })).toBeInTheDocument();
-      expect(screen.getByText(/コンテンツは準備中です/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: '料理一覧', level: 1 })).toBeInTheDocument();
+      expect(screen.getByRole('navigation', { name: 'パンくずリスト' })).toBeInTheDocument();
+      expect(screen.getByText('ホーム')).toBeInTheDocument();
     });
 
     it('should render Islands page with placeholder', () => {

@@ -83,17 +83,17 @@
 
 ### Tests for User Story 2 (TDD - Red Phase)
 
-- [ ] T020 [P] [US2] Unit test for filterRecipesByType() in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T021 [P] [US2] Integration test for type filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
-- [ ] T022 [P] [US2] Integration test for filter clear functionality in apps/web/tests/integration/recipes-page.test.tsx
+- [x] T020 [P] [US2] Unit test for filterRecipesByType() in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T021 [P] [US2] Integration test for type filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
+- [x] T022 [P] [US2] Integration test for filter clear functionality in apps/web/tests/integration/recipes-page.test.tsx
 
 ### Implementation for User Story 2 (Green Phase)
 
-- [ ] T023 [P] [US2] Implement filterRecipesByType() function in apps/web/src/lib/data/recipes.ts
-- [ ] T024 [US2] Create RecipeFilter component with type selection UI in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T025 [US2] Integrate RecipeFilter into recipes page with useState in apps/web/src/app/recipes/page.tsx
-- [ ] T026 [US2] Add filter clear button to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T027 [US2] Verify all US2 tests pass and performance < 1 second (SC-002)
+- [x] T023 [P] [US2] Implement filterRecipesByType() function in apps/web/src/lib/data/recipes.ts
+- [x] T024 [US2] Create RecipeFilter component with type selection UI in apps/web/src/components/recipes/recipe-filter.tsx
+- [x] T025 [US2] Integrate RecipeFilter into recipes page with useState in apps/web/src/app/recipes/page.tsx
+- [x] T026 [US2] Add filter clear button to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
+- [x] T027 [US2] Verify all US2 tests pass and performance < 1 second (SC-002)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently. Type filtering works without breaking default display.
 
@@ -107,18 +107,18 @@
 
 ### Tests for User Story 3 (TDD - Red Phase)
 
-- [ ] T028 [P] [US3] Unit test for extractIngredients() in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T029 [P] [US3] Unit test for filterRecipesByIngredients() single ingredient in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T030 [P] [US3] Unit test for filterRecipesByIngredients() multiple ingredients (AND) in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T031 [P] [US3] Integration test for ingredient filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
+- [x] T028 [P] [US3] Unit test for extractIngredients() in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T029 [P] [US3] Unit test for filterRecipesByIngredients() single ingredient in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T030 [P] [US3] Unit test for filterRecipesByIngredients() multiple ingredients (AND) in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T031 [P] [US3] Integration test for ingredient filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
 
 ### Implementation for User Story 3 (Green Phase)
 
-- [ ] T032 [P] [US3] Implement extractIngredients() function in apps/web/src/lib/data/recipes.ts
-- [ ] T033 [P] [US3] Implement filterRecipesByIngredients() function in apps/web/src/lib/data/recipes.ts
-- [ ] T034 [US3] Extend RecipeFilter component with ingredient selection UI in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T035 [US3] Add ingredient filter state management to recipes page in apps/web/src/app/recipes/page.tsx
-- [ ] T036 [US3] Verify all US3 tests pass and performance < 1 second (SC-003)
+- [x] T032 [P] [US3] Implement extractIngredients() function in apps/web/src/lib/data/recipes.ts
+- [x] T033 [P] [US3] Implement filterRecipesByIngredients() function in apps/web/src/lib/data/recipes.ts
+- [x] T034 [US3] Extend RecipeFilter component with ingredient selection UI in apps/web/src/components/recipes/recipe-filter.tsx
+- [x] T035 [US3] Add ingredient filter state management to recipes page in apps/web/src/app/recipes/page.tsx
+- [x] T036 [US3] Verify all US3 tests pass and performance < 1 second (SC-003)
 
 **Checkpoint**: All user stories 1-3 should now be independently functional. Ingredient filtering works alongside type filtering.
 
@@ -132,19 +132,19 @@
 
 ### Tests for User Story 4 (TDD - Red Phase)
 
-- [ ] T037 [P] [US4] Unit test for filterRecipes() with type only in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T038 [P] [US4] Unit test for filterRecipes() with ingredients only in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T039 [P] [US4] Unit test for filterRecipes() with both type and ingredients in apps/web/tests/unit/lib/data/recipes.test.ts
-- [ ] T040 [P] [US4] Integration test for combined filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
-- [ ] T041 [P] [US4] Integration test for partial filter clear (type only or ingredients only) in apps/web/tests/integration/recipes-page.test.tsx
+- [x] T037 [P] [US4] Unit test for filterRecipes() with type only in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T038 [P] [US4] Unit test for filterRecipes() with ingredients only in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T039 [P] [US4] Unit test for filterRecipes() with both type and ingredients in apps/web/tests/unit/lib/data/recipes.test.ts
+- [x] T040 [P] [US4] Integration test for combined filter UI interaction in apps/web/tests/integration/recipes-page.test.tsx
+- [x] T041 [P] [US4] Integration test for partial filter clear (type only or ingredients only) in apps/web/tests/integration/recipes-page.test.tsx
 
 ### Implementation for User Story 4 (Green Phase)
 
-- [ ] T042 [US4] Implement filterRecipes() unified filter function in apps/web/src/lib/data/recipes.ts
-- [ ] T043 [US4] Update recipes page to use filterRecipes() instead of separate filters in apps/web/src/app/recipes/page.tsx
-- [ ] T044 [US4] Add partial filter clear buttons to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T045 [US4] Add filter state display to RecipeFilter showing active filters in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T046 [US4] Verify all US4 tests pass and combined filtering works correctly
+- [x] T042 [US4] Implement filterRecipes() unified filter function in apps/web/src/lib/data/recipes.ts
+- [x] T043 [US4] Update recipes page to use filterRecipes() instead of separate filters in apps/web/src/app/recipes/page.tsx
+- [x] T044 [US4] Add partial filter clear buttons to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
+- [x] T045 [US4] Add filter state display to RecipeFilter showing active filters in apps/web/src/components/recipes/recipe-filter.tsx
+- [x] T046 [US4] Verify all US4 tests pass and combined filtering works correctly
 
 **Checkpoint**: All user stories should now be independently functional. Combined filtering provides advanced search capability.
 
@@ -154,18 +154,18 @@
 
 **Purpose**: Improvements that affect multiple user stories and edge cases
 
-- [ ] T047 [P] Add empty state message when no recipes match filters in apps/web/src/components/recipes/recipe-list.tsx
-- [ ] T048 [P] Add placeholder image support for recipes without imageUrl in apps/web/src/components/recipes/recipe-card.tsx
-- [ ] T049 [P] Add loading state to recipes page during data fetch in apps/web/src/app/recipes/page.tsx
-- [ ] T050 [P] Optimize with useMemo for filter operations in apps/web/src/app/recipes/page.tsx
-- [ ] T051 [P] Test with 100+ recipe dataset to verify performance (SC-005)
-- [ ] T052 [P] Add ARIA attributes for accessibility to RecipeCard in apps/web/src/components/recipes/recipe-card.tsx
-- [ ] T053 [P] Add ARIA attributes for accessibility to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
-- [ ] T054 [P] Verify keyboard navigation works for all interactive elements
-- [ ] T055 [P] Run Lighthouse audit to verify page load < 3 seconds (SC-001)
-- [ ] T056 [P] Add inline code comments to complex filter logic in apps/web/src/lib/data/recipes.ts
-- [ ] T057 Validate quickstart.md steps work correctly
-- [ ] T058 Final build and test suite verification
+- [x] T047 [P] Add empty state message when no recipes match filters in apps/web/src/components/recipes/recipe-list.tsx
+- [x] T048 [P] Add placeholder image support for recipes without imageUrl in apps/web/src/components/recipes/recipe-card.tsx
+- [x] T049 [P] Add loading state to recipes page during data fetch in apps/web/src/app/recipes/page.tsx
+- [x] T050 [P] Optimize with useMemo for filter operations in apps/web/src/app/recipes/page.tsx
+- [ ] T051 [P] Test with 100+ recipe dataset to verify performance (SC-005) - DEFERRED: Current dataset sufficient for MVP
+- [x] T052 [P] Add ARIA attributes for accessibility to RecipeCard in apps/web/src/components/recipes/recipe-card.tsx
+- [x] T053 [P] Add ARIA attributes for accessibility to RecipeFilter in apps/web/src/components/recipes/recipe-filter.tsx
+- [ ] T054 [P] Verify keyboard navigation works for all interactive elements - DEFERRED: Manual testing required
+- [ ] T055 [P] Run Lighthouse audit to verify page load < 3 seconds (SC-001) - DEFERRED: Manual testing required
+- [x] T056 [P] Add inline code comments to complex filter logic in apps/web/src/lib/data/recipes.ts
+- [ ] T057 Validate quickstart.md steps work correctly - DEFERRED: Manual validation required
+- [x] T058 Final build and test suite verification
 
 ---
 
