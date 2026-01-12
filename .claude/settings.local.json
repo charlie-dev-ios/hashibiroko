@@ -15,7 +15,11 @@
       "Skill(speckit.tasks)",
       "Skill(speckit.specify)",
       "Bash(grep:*)",
-      "mcp__plugin_serena_serena__*"
+      "mcp__plugin_serena_serena__*",
+      "WebFetch(domain:gamewith.jp)",
+      "WebSearch",
+      "WebFetch(domain:*)",
+      "Bash(node validate-recipes.mjs:*)"
     ]
   }
 }
