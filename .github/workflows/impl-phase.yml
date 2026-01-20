@@ -1,0 +1,181 @@
+name: Impl Phase - 実装
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  start-impl-phase:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.head.ref, '/plan')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install Playwright browsers
+        run: bunx playwright install chromium --with-deps
+        working-directory: apps/web
+
+      - name: Extract feature info from branch
+        id: extract
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          FEATURE_PREFIX=$(echo "$BRANCH" | sed 's|/plan$||')
+          echo "feature_prefix=$FEATURE_PREFIX" >> $GITHUB_OUTPUT
+          echo "impl_branch=${FEATURE_PREFIX}/impl" >> $GITHUB_OUTPUT
+
+      - name: Find parent issue
+        id: find-parent
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body;
+            const match = prBody.match(/親Issue: #(\d+)/);
+            if (match) {
+              core.setOutput('parent_issue', match[1]);
+            } else {
+              core.setFailed('Could not find parent issue reference');
+            }
+
+      - name: Create impl sub-issue
+        id: create-sub-issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: subIssue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Impl] ${context.payload.pull_request.title.replace('[Plan] ', '')}`,
+              body: `## 実装フェーズ\n\n親Issue: #${{ steps.find-parent.outputs.parent_issue }}\n\n### 自動実行内容\n- [ ] /implement 実行\n- [ ] 単体テスト実行\n- [ ] E2Eテスト実行\n- [ ] PR作成\n\n### ステータス\n🔄 処理中...`,
+              labels: ['phase:impl', 'status:in-progress']
+            });
+
+            core.setOutput('sub_issue_number', subIssue.number);
+            return subIssue.number;
+
+      - name: Create impl branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ steps.extract.outputs.impl_branch }}
+          git push -u origin ${{ steps.extract.outputs.impl_branch }}
+
+      - name: Run spec-kit implement
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cat << 'EOF' > /tmp/impl-prompt.txt
+          この機能を実装してください。
+
+          ## 指示
+          1. /implement を実行してタスクに従って実装を進めてください
+          2. 実装が完了したら、変更をコミットしてください
+          EOF
+
+          claude --print -p "$(cat /tmp/impl-prompt.txt)" || echo "Claude execution completed"
+
+      - name: Commit implementation
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat: 機能実装
+
+          Refs #${{ steps.find-parent.outputs.parent_issue }}
+
+          Co-Authored-By: Claude <noreply@anthropic.com>"
+            git push
+          fi
+
+      - name: Run unit tests
+        id: unit-tests
+        run: |
+          bun run test || echo "unit_test_failed=true" >> $GITHUB_OUTPUT
+        working-directory: apps/web
+        continue-on-error: true
+
+      - name: Run E2E tests
+        id: e2e-tests
+        run: |
+          bun run build
+          bun run test:e2e || echo "e2e_test_failed=true" >> $GITHUB_OUTPUT
+        working-directory: apps/web
+        continue-on-error: true
+
+      - name: Check test results
+        id: test-results
+        run: |
+          if [[ "${{ steps.unit-tests.outputs.unit_test_failed }}" == "true" ]] || [[ "${{ steps.e2e-tests.outputs.e2e_test_failed }}" == "true" ]]; then
+            echo "tests_passed=false" >> $GITHUB_OUTPUT
+          else
+            echo "tests_passed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.test-results.outputs.tests_passed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Impl] ${context.payload.pull_request.title.replace('[Plan] ', '')}`,
+              head: '${{ steps.extract.outputs.impl_branch }}',
+              base: 'main',
+              body: `## 実装 PR\n\n### 関連Issue\n- 親Issue: #${{ steps.find-parent.outputs.parent_issue }}\n- 実装Issue: #${{ steps.create-sub-issue.outputs.sub_issue_number }}\n\n### 変更内容\n- 機能の実装\n\n### テスト結果\n- ✅ 単体テスト: パス\n- ✅ E2Eテスト: パス\n\n---\n🤖 Generated by spec-kit automation`
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create-sub-issue.outputs.sub_issue_number }},
+              body: `## 実装フェーズ\n\n親Issue: #${{ steps.find-parent.outputs.parent_issue }}\nPR: #${pr.number}\n\n### 自動実行内容\n- [x] /implement 実行\n- [x] 単体テスト実行\n- [x] E2Eテスト実行\n- [x] PR作成\n\n### ステータス\n✅ PR作成完了 - レビュー待ち`
+            });
+
+      - name: Update sub-issue on test failure
+        if: steps.test-results.outputs.tests_passed == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create-sub-issue.outputs.sub_issue_number }},
+              body: `## 実装フェーズ\n\n親Issue: #${{ steps.find-parent.outputs.parent_issue }}\n\n### 自動実行内容\n- [x] /implement 実行\n- [x] 単体テスト実行\n- [x] E2Eテスト実行\n- [ ] PR作成\n\n### ステータス\n❌ テスト失敗 - 手動対応が必要です\n\n### 詳細\nWorkflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
+              labels: ['phase:impl', 'status:blocked']
+            });
+
+      - name: Update parent issue on success
+        if: steps.test-results.outputs.tests_passed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.find-parent.outputs.parent_issue }},
+              labels: ['status:impl-review']
+            });
