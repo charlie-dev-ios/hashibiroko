@@ -5,25 +5,16 @@ on:
     types: [labeled]
 
 jobs:
-  start-spec-phase:
+  setup-spec-phase:
     if: github.event.label.name == 'phase:backlog'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
-      pull-requests: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
 
       - name: Extract feature info
         id: extract
@@ -34,10 +25,9 @@ jobs:
             const title = issue.title.replace('[Backlog] ', '').trim();
             const body = issue.body;
 
-            // Generate feature name (kebab-case)
+            // Generate feature name (kebab-case, keep Japanese)
             const featureName = title
-              .toLowerCase()
-              .replace(/[^a-z0-9\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]+/g, '-')
+              .replace(/[^\w\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]+/g, '-')
               .replace(/^-|-$/g, '')
               .substring(0, 50);
 
@@ -64,97 +54,93 @@ jobs:
             core.setOutput('branch_name', branchName);
             core.setOutput('issue_number', issue.number);
             core.setOutput('issue_title', title);
-            core.setOutput('issue_body', body);
-
-      - name: Create spec sub-issue
-        id: create-sub-issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: subIssue } = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `[Spec] ${{ steps.extract.outputs.issue_title }}`,
-              body: `## 仕様検討フェーズ\n\n親Issue: #${{ steps.extract.outputs.issue_number }}\n\n### 自動実行内容\n- [ ] /clarify 実行\n- [ ] /specify 実行\n- [ ] PR作成\n\n### ステータス\n🔄 処理中...`,
-              labels: ['phase:spec', 'status:in-progress']
-            });
-
-            core.setOutput('sub_issue_number', subIssue.number);
-            core.setOutput('sub_issue_id', subIssue.id);
-            return subIssue.number;
 
       - name: Create feature branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b ${{ steps.extract.outputs.branch_name }}/spec
+
+          # Create placeholder file to enable branch push
+          mkdir -p specs/${{ steps.extract.outputs.branch_name }}
+          echo "# ${{ steps.extract.outputs.issue_title }}" > specs/${{ steps.extract.outputs.branch_name }}/README.md
+          echo "" >> specs/${{ steps.extract.outputs.branch_name }}/README.md
+          echo "親Issue: #${{ steps.extract.outputs.issue_number }}" >> specs/${{ steps.extract.outputs.branch_name }}/README.md
+
+          git add .
+          git commit -m "chore: 仕様検討ブランチを作成"
           git push -u origin ${{ steps.extract.outputs.branch_name }}/spec
 
-      - name: Run spec-kit clarify and specify
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          # Create prompt file
-          cat << 'EOF' > /tmp/spec-prompt.txt
-          以下のバックログIssueの仕様を作成してください。
-
-          ## Issue情報
-          タイトル: ${{ steps.extract.outputs.issue_title }}
-
-          ## 本文
-          ${{ steps.extract.outputs.issue_body }}
-
-          ## 指示
-          1. まず /clarify を実行して仕様の曖昧な点を明確にしてください
-          2. 次に /specify を実行して仕様書を作成してください
-          3. 生成されたファイルをコミットしてください
-          EOF
-
-          # Run Claude Code CLI
-          claude --print -p "$(cat /tmp/spec-prompt.txt)" || echo "Claude execution completed"
-
-      - name: Commit spec files
-        run: |
-          git add -A
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "docs(spec): ${{ steps.extract.outputs.issue_title }}の仕様書を作成
-
-          Refs #${{ steps.extract.outputs.issue_number }}
-
-          Co-Authored-By: Claude <noreply@anthropic.com>"
-            git push
-          fi
-
-      - name: Create Pull Request
+      - name: Create spec sub-issue with instructions
+        id: create-sub-issue
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: pr } = await github.rest.pulls.create({
+            const branchName = '${{ steps.extract.outputs.branch_name }}/spec';
+            const issueTitle = '${{ steps.extract.outputs.issue_title }}';
+            const parentIssue = '${{ steps.extract.outputs.issue_number }}';
+
+            const instructions = `## 仕様検討フェーズ
+
+            親Issue: #${parentIssue}
+            ブランチ: \`${branchName}\`
+
+            ### 実行手順
+
+            #### 1. ブランチをチェックアウト
+            \`\`\`bash
+            git fetch origin
+            git checkout ${branchName}
+            \`\`\`
+
+            #### 2. spec-kit コマンドを実行
+            Claude Code で以下を実行:
+            \`\`\`
+            /clarify
+            /specify "${issueTitle}"
+            \`\`\`
+
+            #### 3. 変更をコミット・プッシュ
+            \`\`\`bash
+            git add .
+            git commit -m "docs(spec): ${issueTitle}の仕様書を作成"
+            git push
+            \`\`\`
+
+            #### 4. PRを作成
+            プッシュ後、自動的にPRが作成されます。
+            または手動で作成してください。
+
+            ---
+            ### ステータス
+            ⏳ 手動実行待ち`;
+
+            const { data: subIssue } = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `[Spec] ${{ steps.extract.outputs.issue_title }}`,
-              head: '${{ steps.extract.outputs.branch_name }}/spec',
-              base: 'main',
-              body: `## 仕様検討 PR\n\n### 関連Issue\n- 親Issue: #${{ steps.extract.outputs.issue_number }}\n- 仕様Issue: #${{ steps.create-sub-issue.outputs.sub_issue_number }}\n\n### 変更内容\n- 仕様書の作成\n\n### 次のステップ\nこのPRがマージされると、自動的に実装計画フェーズが開始されます。\n\n---\n🤖 Generated by spec-kit automation`
+              title: `[Spec] ${issueTitle}`,
+              body: instructions,
+              labels: ['phase:spec', 'status:in-progress']
             });
 
-            // Update sub-issue with PR link
-            await github.rest.issues.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create-sub-issue.outputs.sub_issue_number }},
-              body: `## 仕様検討フェーズ\n\n親Issue: #${{ steps.extract.outputs.issue_number }}\nPR: #${pr.number}\n\n### 自動実行内容\n- [x] /clarify 実行\n- [x] /specify 実行\n- [x] PR作成\n\n### ステータス\n✅ PR作成完了 - レビュー待ち`
-            });
+            core.setOutput('sub_issue_number', subIssue.number);
 
       - name: Update parent issue
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.issues.addLabels({
+            const parentIssue = ${{ steps.extract.outputs.issue_number }};
+            const subIssue = ${{ steps.create-sub-issue.outputs.sub_issue_number }};
+            const branchName = '${{ steps.extract.outputs.branch_name }}/spec';
+
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: ${{ steps.extract.outputs.issue_number }},
-              labels: ['status:spec-review']
+              issue_number: parentIssue,
+              body: `## 🚀 仕様検討フェーズを開始しました
+
+            - Sub-issue: #${subIssue}
+            - ブランチ: \`${branchName}\`
+
+            詳細な手順は Sub-issue を確認してください。`
             });

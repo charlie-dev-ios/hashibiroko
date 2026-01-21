@@ -6,33 +6,26 @@ on:
     branches: [main]
 
 jobs:
-  start-plan-phase:
-    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, '') && contains(github.event.pull_request.head.ref, '/spec')
+  setup-plan-phase:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.head.ref, '/spec')
     runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
-      pull-requests: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
-
       - name: Extract feature info from branch
         id: extract
         run: |
           BRANCH="${{ github.event.pull_request.head.ref }}"
-          # Extract feature prefix (e.g., 001-feature-name from 001-feature-name/spec)
           FEATURE_PREFIX=$(echo "$BRANCH" | sed 's|/spec$||')
+          FEATURE_NAME=$(echo "$FEATURE_PREFIX" | sed 's|^[0-9]*-||')
+
           echo "feature_prefix=$FEATURE_PREFIX" >> $GITHUB_OUTPUT
+          echo "feature_name=$FEATURE_NAME" >> $GITHUB_OUTPUT
           echo "plan_branch=${FEATURE_PREFIX}/plan" >> $GITHUB_OUTPUT
 
       - name: Find parent issue
@@ -45,89 +38,94 @@ jobs:
             if (match) {
               core.setOutput('parent_issue', match[1]);
             } else {
-              core.setFailed('Could not find parent issue reference');
+              core.setOutput('parent_issue', '');
             }
-
-      - name: Create plan sub-issue
-        id: create-sub-issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: subIssue } = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `[Plan] ${context.payload.pull_request.title.replace('[Spec] ', '')}`,
-              body: `## 実装計画フェーズ\n\n親Issue: #${{ steps.find-parent.outputs.parent_issue }}\n\n### 自動実行内容\n- [ ] /plan 実行\n- [ ] /task 実行\n- [ ] /analyze 実行\n- [ ] PR作成\n\n### ステータス\n🔄 処理中...`,
-              labels: ['phase:plan', 'status:in-progress']
-            });
-
-            core.setOutput('sub_issue_number', subIssue.number);
-            return subIssue.number;
 
       - name: Create plan branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b ${{ steps.extract.outputs.plan_branch }}
+
+          # Create placeholder
+          mkdir -p specs/${{ steps.extract.outputs.feature_prefix }}
+          touch specs/${{ steps.extract.outputs.feature_prefix }}/.plan-phase
+
+          git add .
+          git commit -m "chore: 実装計画ブランチを作成" --allow-empty
           git push -u origin ${{ steps.extract.outputs.plan_branch }}
 
-      - name: Run spec-kit plan, task, analyze
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          cat << 'EOF' > /tmp/plan-prompt.txt
-          この機能の実装計画を作成してください。
+      - name: Create plan sub-issue with instructions
+        id: create-sub-issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = '${{ steps.extract.outputs.plan_branch }}';
+            const featureName = '${{ steps.extract.outputs.feature_name }}';
+            const parentIssue = '${{ steps.find-parent.outputs.parent_issue }}';
 
-          ## 指示
-          1. /plan を実行して実装計画を作成してください
-          2. /task を実行してタスクリストを生成してください
-          3. /analyze を実行して整合性を確認してください
-          4. 生成されたファイルをコミットしてください
-          EOF
+            const instructions = `## 実装計画フェーズ
 
-          claude --print -p "$(cat /tmp/plan-prompt.txt)" || echo "Claude execution completed"
+            親Issue: #${parentIssue}
+            ブランチ: \`${branchName}\`
 
-      - name: Commit plan files
-        run: |
-          git add -A
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "docs(plan): 実装計画とタスクリストを作成
+            ### 実行手順
 
-          Refs #${{ steps.find-parent.outputs.parent_issue }}
+            #### 1. ブランチをチェックアウト
+            \`\`\`bash
+            git fetch origin
+            git checkout ${branchName}
+            \`\`\`
 
-          Co-Authored-By: Claude <noreply@anthropic.com>"
+            #### 2. spec-kit コマンドを実行
+            Claude Code で以下を実行:
+            \`\`\`
+            /plan
+            /task
+            /analyze
+            \`\`\`
+
+            #### 3. 変更をコミット・プッシュ
+            \`\`\`bash
+            git add .
+            git commit -m "docs(plan): 実装計画とタスクリストを作成"
             git push
-          fi
+            \`\`\`
 
-      - name: Create Pull Request
+            #### 4. PRを作成
+            プッシュ後、自動的にPRが作成されます。
+
+            ---
+            ### ステータス
+            ⏳ 手動実行待ち`;
+
+            const { data: subIssue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Plan] ${featureName}`,
+              body: instructions,
+              labels: ['phase:plan', 'status:in-progress']
+            });
+
+            core.setOutput('sub_issue_number', subIssue.number);
+
+      - name: Comment on parent issue
+        if: steps.find-parent.outputs.parent_issue != ''
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: pr } = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `[Plan] ${context.payload.pull_request.title.replace('[Spec] ', '')}`,
-              head: '${{ steps.extract.outputs.plan_branch }}',
-              base: 'main',
-              body: `## 実装計画 PR\n\n### 関連Issue\n- 親Issue: #${{ steps.find-parent.outputs.parent_issue }}\n- 計画Issue: #${{ steps.create-sub-issue.outputs.sub_issue_number }}\n\n### 変更内容\n- 実装計画書の作成\n- タスクリストの生成\n- 整合性分析\n\n### 次のステップ\nこのPRがマージされると、自動的に実装フェーズが開始されます。\n\n---\n🤖 Generated by spec-kit automation`
-            });
+            const parentIssue = ${{ steps.find-parent.outputs.parent_issue }};
+            const subIssue = ${{ steps.create-sub-issue.outputs.sub_issue_number }};
+            const branchName = '${{ steps.extract.outputs.plan_branch }}';
 
-            await github.rest.issues.update({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: ${{ steps.create-sub-issue.outputs.sub_issue_number }},
-              body: `## 実装計画フェーズ\n\n親Issue: #${{ steps.find-parent.outputs.parent_issue }}\nPR: #${pr.number}\n\n### 自動実行内容\n- [x] /plan 実行\n- [x] /task 実行\n- [x] /analyze 実行\n- [x] PR作成\n\n### ステータス\n✅ PR作成完了 - レビュー待ち`
-            });
+              issue_number: parentIssue,
+              body: `## 📋 実装計画フェーズを開始しました
 
-      - name: Update parent issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.find-parent.outputs.parent_issue }},
-              labels: ['status:plan-review']
+            - Sub-issue: #${subIssue}
+            - ブランチ: \`${branchName}\`
+
+            詳細な手順は Sub-issue を確認してください。`
             });
