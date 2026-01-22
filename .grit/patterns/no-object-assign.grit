@@ -1,0 +1,9 @@
+engine marzano(0.1)
+language js
+
+pattern no_object_assign() {
+  `Object.assign($target, $source)` => `{ ...$target, ...$source }` where {
+    $target <: not `{}`,
+    $source <: any
+  }
+}

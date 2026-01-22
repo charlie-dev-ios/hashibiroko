@@ -1,0 +1,11 @@
+version: 0.1
+
+patterns:
+  - name: no-object-assign
+    level: error
+    title: Prefer spread syntax over Object.assign
+    description: |
+      Object.assign should be replaced with spread syntax for better readability.
+    tags:
+      - style
+      - es6
