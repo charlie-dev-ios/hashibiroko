@@ -13,7 +13,11 @@ export const RecipeSchema = z.object({
     quantity: z.number().int().positive(),
   })),
   imageUrl: z.string().optional(), // 相対パスまたはURL（任意）
-});
+  effect: z.string().optional(), // 料理の効果（任意）
+}).transform((data) => ({
+  ...data,
+  power: data.energy, // powerはenergyのエイリアス
+}));
 
 export type Recipe = z.infer<typeof RecipeSchema>;
 export type RecipeType = z.infer<typeof RecipeTypeSchema>;
