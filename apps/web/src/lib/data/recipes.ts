@@ -1,15 +1,22 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { RecipeSchema, type Recipe, type RecipeType } from '@/lib/schemas/recipe';
-import { z } from 'zod';
+import fs from "node:fs/promises";
+import path from "node:path";
+import { z } from "zod";
+import {
+  type Recipe,
+  RecipeSchema,
+  type RecipeType,
+} from "@/lib/schemas/recipe";
 
-const RECIPES_FILE = path.join(process.cwd(), 'src/content/recipes/recipes.json');
+const RECIPES_FILE = path.join(
+  process.cwd(),
+  "src/content/recipes/recipes.json",
+);
 
 /**
  * すべての料理を取得
  */
 export async function getAllRecipes(): Promise<Recipe[]> {
-  const data = await fs.readFile(RECIPES_FILE, 'utf-8');
+  const data = await fs.readFile(RECIPES_FILE, "utf-8");
   const parsed = JSON.parse(data);
 
   const result = z.array(RecipeSchema).safeParse(parsed.recipes);
@@ -26,7 +33,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
  */
 export async function getRecipeById(id: number): Promise<Recipe | null> {
   const allRecipes = await getAllRecipes();
-  const recipe = allRecipes.find(r => r.id === id);
+  const recipe = allRecipes.find((r) => r.id === id);
 
   return recipe || null;
 }
@@ -50,14 +57,20 @@ export function extractIngredients(recipes: Recipe[]): string[] {
  * 料理の必要食材総数を計算
  */
 export function getTotalIngredientCount(recipe: Recipe): number {
-  return recipe.ingredients.reduce((sum, ingredient) => sum + ingredient.quantity, 0);
+  return recipe.ingredients.reduce(
+    (sum, ingredient) => sum + ingredient.quantity,
+    0,
+  );
 }
 
 /**
  * 料理種別でフィルタリング
  */
-export function filterRecipesByType(recipes: Recipe[], type: RecipeType): Recipe[] {
-  return recipes.filter(recipe => recipe.type === type);
+export function filterRecipesByType(
+  recipes: Recipe[],
+  type: RecipeType,
+): Recipe[] {
+  return recipes.filter((recipe) => recipe.type === type);
 }
 
 /**
@@ -66,17 +79,22 @@ export function filterRecipesByType(recipes: Recipe[], type: RecipeType): Recipe
  * @param ingredientNames 検索する食材名のリスト
  * @returns 指定されたすべての食材を含む料理のみを返す
  */
-export function filterRecipesByIngredients(recipes: Recipe[], ingredientNames: string[]): Recipe[] {
+export function filterRecipesByIngredients(
+  recipes: Recipe[],
+  ingredientNames: string[],
+): Recipe[] {
   // 食材が指定されていない場合は全レシピを返す
   if (ingredientNames.length === 0) {
     return recipes;
   }
 
-  return recipes.filter(recipe => {
+  return recipes.filter((recipe) => {
     // 料理に含まれる食材名をリストアップ
-    const recipeIngredientNames = recipe.ingredients.map(i => i.name);
+    const recipeIngredientNames = recipe.ingredients.map((i) => i.name);
     // 指定されたすべての食材が料理に含まれているかチェック (AND条件)
-    return ingredientNames.every(name => recipeIngredientNames.includes(name));
+    return ingredientNames.every((name) =>
+      recipeIngredientNames.includes(name),
+    );
   });
 }
 
@@ -94,7 +112,10 @@ export interface FilterOptions {
  * @param options フィルターオプション（種別、食材）
  * @returns フィルター条件に一致する料理のリスト
  */
-export function filterRecipes(recipes: Recipe[], options: FilterOptions): Recipe[] {
+export function filterRecipes(
+  recipes: Recipe[],
+  options: FilterOptions,
+): Recipe[] {
   let result = recipes;
 
   // 種別フィルターが指定されている場合、まず種別で絞り込む

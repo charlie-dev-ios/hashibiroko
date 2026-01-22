@@ -1,13 +1,16 @@
-import Link from 'next/link';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import type { Pokemon } from '@/lib/schemas/pokemon';
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Pokemon } from "@/lib/schemas/pokemon";
 
 export interface PokemonDetailProps {
   pokemon: Pokemon;
   evolutionChain?: Pokemon[];
 }
 
-export default function PokemonDetail({ pokemon, evolutionChain = [] }: PokemonDetailProps) {
+export default function PokemonDetail({
+  pokemon,
+  evolutionChain = [],
+}: PokemonDetailProps) {
   return (
     <div className="space-y-6">
       {/* Basic Info */}
@@ -101,8 +104,8 @@ export default function PokemonDetail({ pokemon, evolutionChain = [] }: PokemonD
                     href={`/pokemon/${evo.id}`}
                     className={`text-sm ${
                       evo.id === pokemon.id
-                        ? 'font-bold text-primary'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? "font-bold text-primary"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {evo.name}

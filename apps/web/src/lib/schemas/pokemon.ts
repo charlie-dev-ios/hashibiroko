@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const SleepTypeSchema = z.enum(['うとうと', 'すやすや', 'ぐっすり']);
-export const SpecialtySchema = z.enum(['きのみ', '食材', 'スキル']);
+export const SleepTypeSchema = z.enum(["うとうと", "すやすや", "ぐっすり"]);
+export const SpecialtySchema = z.enum(["きのみ", "食材", "スキル"]);
 
 export const PokemonSchema = z.object({
   id: z.number().int().positive(),
@@ -24,11 +24,13 @@ export const PokemonSchema = z.object({
   }),
 
   // 進化情報
-  evolution: z.object({
-    prevId: z.number().int().positive().optional(), // 進化前のポケモンID
-    nextIds: z.array(z.number().int().positive()).optional(), // 進化先のポケモンID（複数可能）
-    condition: z.string().optional(), // 進化条件（例: "Lv.20"、"おやつ80個"）
-  }).optional(),
+  evolution: z
+    .object({
+      prevId: z.number().int().positive().optional(), // 進化前のポケモンID
+      nextIds: z.array(z.number().int().positive()).optional(), // 進化先のポケモンID（複数可能）
+      condition: z.string().optional(), // 進化条件（例: "Lv.20"、"おやつ80個"）
+    })
+    .optional(),
 
   // 出現場所
   islands: z.array(z.string()), // 出現する島の名前

@@ -12,7 +12,8 @@ const notoSansJP = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   title: "ポケモンスリープ攻略サイト",
-  description: "ポケモンスリープの攻略情報を提供するサイト。ポケモン図鑑、ゲームメカニクス、戦略ガイド、チーム編成などの情報を掲載。",
+  description:
+    "ポケモンスリープの攻略情報を提供するサイト。ポケモン図鑑、ゲームメカニクス、戦略ガイド、チーム編成などの情報を掲載。",
 };
 
 export default function RootLayout({
@@ -33,9 +34,7 @@ export default function RootLayout({
             </Link>
           </div>
         </header>
-        <main className="min-h-screen bg-background">
-          {children}
-        </main>
+        <main className="min-h-screen bg-background">{children}</main>
       </body>
     </html>
   );

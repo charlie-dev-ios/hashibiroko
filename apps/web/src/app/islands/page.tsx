@@ -1,9 +1,9 @@
-import Breadcrumb from '@/components/navigation/breadcrumb';
+import Breadcrumb from "@/components/navigation/breadcrumb";
 
 export default function IslandsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <Breadcrumb items={[{ label: '島ガイド' }]} />
+      <Breadcrumb items={[{ label: "島ガイド" }]} />
 
       <h1 className="text-4xl font-bold mb-8">島ガイド</h1>
 

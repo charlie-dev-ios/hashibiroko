@@ -1,5 +1,5 @@
-import type { Recipe } from '@/lib/schemas/recipe';
-import RecipeCard from './recipe-card';
+import type { Recipe } from "@/lib/schemas/recipe";
+import RecipeCard from "./recipe-card";
 
 interface RecipeListProps {
   recipes: Recipe[];

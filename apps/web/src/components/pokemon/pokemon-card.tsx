@@ -1,6 +1,12 @@
-import Link from 'next/link';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import type { Pokemon } from '@/lib/schemas/pokemon';
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { Pokemon } from "@/lib/schemas/pokemon";
 
 export interface PokemonCardProps {
   pokemon: Pokemon;

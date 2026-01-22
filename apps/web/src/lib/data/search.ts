@@ -1,11 +1,11 @@
-import type { Pokemon } from '@/lib/schemas/pokemon';
+import type { Pokemon } from "@/lib/schemas/pokemon";
 
 export interface SearchOptions {
   keyword?: string;
   sleepType?: string;
   specialty?: string;
-  sortBy?: 'id' | 'name';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "id" | "name";
+  sortOrder?: "asc" | "desc";
 }
 
 /**
@@ -16,24 +16,24 @@ export interface SearchOptions {
  */
 export function searchPokemon(
   pokemon: Pokemon[],
-  options: SearchOptions
+  options: SearchOptions,
 ): Pokemon[] {
   let results = [...pokemon];
 
   // Filter by keyword (search in name)
   if (options.keyword) {
     const keyword = options.keyword.toLowerCase();
-    results = results.filter(p => p.name.toLowerCase().includes(keyword));
+    results = results.filter((p) => p.name.toLowerCase().includes(keyword));
   }
 
   // Filter by sleep type
   if (options.sleepType) {
-    results = results.filter(p => p.sleepType === options.sleepType);
+    results = results.filter((p) => p.sleepType === options.sleepType);
   }
 
   // Filter by specialty
   if (options.specialty) {
-    results = results.filter(p => p.specialty === options.specialty);
+    results = results.filter((p) => p.specialty === options.specialty);
   }
 
   // Sort results
@@ -41,13 +41,13 @@ export function searchPokemon(
     results.sort((a, b) => {
       let comparison = 0;
 
-      if (options.sortBy === 'name') {
-        comparison = a.name.localeCompare(b.name, 'ja');
-      } else if (options.sortBy === 'id') {
+      if (options.sortBy === "name") {
+        comparison = a.name.localeCompare(b.name, "ja");
+      } else if (options.sortBy === "id") {
         comparison = a.id - b.id;
       }
 
-      return options.sortOrder === 'desc' ? -comparison : comparison;
+      return options.sortOrder === "desc" ? -comparison : comparison;
     });
   }
 

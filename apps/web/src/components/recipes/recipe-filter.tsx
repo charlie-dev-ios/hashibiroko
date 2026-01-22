@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import type { RecipeType } from '@/lib/schemas/recipe';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { RecipeType } from "@/lib/schemas/recipe";
 
 interface RecipeFilterProps {
   selectedType: RecipeType | null;
@@ -14,9 +14,9 @@ interface RecipeFilterProps {
 }
 
 const RECIPE_TYPES: { value: RecipeType; label: string }[] = [
-  { value: 'カレー', label: 'カレー・シチュー' },
-  { value: 'サラダ', label: 'サラダ' },
-  { value: 'デザート', label: 'デザート' },
+  { value: "カレー", label: "カレー・シチュー" },
+  { value: "サラダ", label: "サラダ" },
+  { value: "デザート", label: "デザート" },
 ];
 
 export default function RecipeFilter({
@@ -30,7 +30,7 @@ export default function RecipeFilter({
 
   const handleIngredientToggle = (ingredient: string) => {
     if (selectedIngredients.includes(ingredient)) {
-      onIngredientsChange(selectedIngredients.filter(i => i !== ingredient));
+      onIngredientsChange(selectedIngredients.filter((i) => i !== ingredient));
     } else {
       onIngredientsChange([...selectedIngredients, ingredient]);
     }
@@ -44,10 +44,16 @@ export default function RecipeFilter({
     <div className="mb-6 space-y-4" role="search" aria-label="料理フィルター">
       {/* Type Filter */}
       <div>
-        <h3 className="text-sm font-semibold mb-2" id="type-filter-label">料理種別</h3>
-        <div className="flex flex-wrap gap-2" role="group" aria-labelledby="type-filter-label">
+        <h3 className="text-sm font-semibold mb-2" id="type-filter-label">
+          料理種別
+        </h3>
+        <div
+          className="flex flex-wrap gap-2"
+          role="group"
+          aria-labelledby="type-filter-label"
+        >
           <Button
-            variant={selectedType === null ? 'default' : 'outline'}
+            variant={selectedType === null ? "default" : "outline"}
             onClick={() => onTypeChange(null)}
             className="text-sm"
             aria-pressed={selectedType === null}
@@ -58,7 +64,7 @@ export default function RecipeFilter({
           {RECIPE_TYPES.map((type) => (
             <Button
               key={type.value}
-              variant={selectedType === type.value ? 'default' : 'outline'}
+              variant={selectedType === type.value ? "default" : "outline"}
               onClick={() => onTypeChange(type.value)}
               className="text-sm"
               aria-pressed={selectedType === type.value}
@@ -73,7 +79,9 @@ export default function RecipeFilter({
       {/* Ingredient Filter */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-semibold" id="ingredient-filter-label">食材フィルター</h3>
+          <h3 className="text-sm font-semibold" id="ingredient-filter-label">
+            食材フィルター
+          </h3>
           <Button
             variant="ghost"
             size="sm"
@@ -81,9 +89,13 @@ export default function RecipeFilter({
             className="text-xs"
             aria-expanded={showIngredients}
             aria-controls="ingredient-list"
-            aria-label={showIngredients ? '食材フィルターを閉じる' : '食材フィルターを開く'}
+            aria-label={
+              showIngredients
+                ? "食材フィルターを閉じる"
+                : "食材フィルターを開く"
+            }
           >
-            {showIngredients ? '閉じる' : '開く'}
+            {showIngredients ? "閉じる" : "開く"}
           </Button>
         </div>
 
@@ -126,7 +138,8 @@ export default function RecipeFilter({
 
         {selectedIngredients.length > 0 && (
           <div className="mt-2 text-sm text-gray-600">
-            選択中: {selectedIngredients.join(', ')} ({selectedIngredients.length}個)
+            選択中: {selectedIngredients.join(", ")} (
+            {selectedIngredients.length}個)
           </div>
         )}
       </div>
@@ -137,7 +150,7 @@ export default function RecipeFilter({
           <span>フィルター:</span>
           {selectedType && (
             <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
-              {RECIPE_TYPES.find(t => t.value === selectedType)?.label}
+              {RECIPE_TYPES.find((t) => t.value === selectedType)?.label}
             </span>
           )}
           {selectedIngredients.length > 0 && (

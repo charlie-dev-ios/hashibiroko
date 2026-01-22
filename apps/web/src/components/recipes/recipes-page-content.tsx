@@ -1,16 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import RecipeList from './recipe-list';
-import RecipeFilter from './recipe-filter';
-import type { Recipe, RecipeType } from '@/lib/schemas/recipe';
-import { extractIngredients, filterRecipesByIngredients } from '@/lib/utils/recipe-utils';
+import { useMemo, useState } from "react";
+import type { Recipe, RecipeType } from "@/lib/schemas/recipe";
+import {
+  extractIngredients,
+  filterRecipesByIngredients,
+} from "@/lib/utils/recipe-utils";
+import RecipeFilter from "./recipe-filter";
+import RecipeList from "./recipe-list";
 
 interface RecipesPageContentProps {
   initialRecipes: Recipe[];
 }
 
-export default function RecipesPageContent({ initialRecipes }: RecipesPageContentProps) {
+export default function RecipesPageContent({
+  initialRecipes,
+}: RecipesPageContentProps) {
   const [selectedType, setSelectedType] = useState<RecipeType | null>(null);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
@@ -25,7 +30,7 @@ export default function RecipesPageContent({ initialRecipes }: RecipesPageConten
 
     // Filter by type
     if (selectedType) {
-      result = result.filter(recipe => recipe.type === selectedType);
+      result = result.filter((recipe) => recipe.type === selectedType);
     }
 
     // Filter by ingredients (AND condition)

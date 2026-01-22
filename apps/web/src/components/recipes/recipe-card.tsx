@@ -1,7 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getTotalIngredientCount } from '@/lib/utils/recipe-utils';
-import type { Recipe } from '@/lib/schemas/recipe';
-import Image from 'next/image';
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import type { Recipe } from "@/lib/schemas/recipe";
+import { getTotalIngredientCount } from "@/lib/utils/recipe-utils";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -11,7 +17,12 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
   const totalIngredients = getTotalIngredientCount(recipe);
 
   return (
-    <Card className="hover:shadow-lg transition-shadow" role="article" aria-label={`料理: ${recipe.name}`} data-testid="recipe-card">
+    <Card
+      className="hover:shadow-lg transition-shadow"
+      role="article"
+      aria-label={`料理: ${recipe.name}`}
+      data-testid="recipe-card"
+    >
       <CardHeader>
         {recipe.imageUrl ? (
           <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-100">
@@ -36,7 +47,9 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           {/* エナジー */}
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-gray-600">エナジー</span>
-            <span className="text-lg font-bold text-blue-600">{((recipe as any).power ?? recipe.energy).toLocaleString()}</span>
+            <span className="text-lg font-bold text-blue-600">
+              {((recipe as any).power ?? recipe.energy).toLocaleString()}
+            </span>
           </div>
 
           {/* 必要食材の列挙 */}
@@ -44,7 +57,10 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             <p className="text-sm font-medium text-gray-600 mb-2">必要食材</p>
             <ul className="space-y-1">
               {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-sm text-gray-700 flex justify-between">
+                <li
+                  key={index}
+                  className="text-sm text-gray-700 flex justify-between"
+                >
                   <span>{ingredient.name}</span>
                   <span className="text-gray-500">{ingredient.quantity}個</span>
                 </li>
@@ -54,8 +70,12 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
           {/* 必要食材の総数 */}
           <div className="flex justify-between items-center pt-2 border-t">
-            <span className="text-sm font-medium text-gray-600">必要食材の総数</span>
-            <span className="text-base font-semibold">{totalIngredients}個</span>
+            <span className="text-sm font-medium text-gray-600">
+              必要食材の総数
+            </span>
+            <span className="text-base font-semibold">
+              {totalIngredients}個
+            </span>
           </div>
 
           {/* 効果 (存在する場合のみ表示) */}

@@ -1,9 +1,9 @@
-import Breadcrumb from '@/components/navigation/breadcrumb';
+import Breadcrumb from "@/components/navigation/breadcrumb";
 
 export default function RecipesLoading() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <Breadcrumb items={[{ label: '料理情報' }]} />
+      <Breadcrumb items={[{ label: "料理情報" }]} />
 
       <h1 className="text-4xl font-bold mb-8">料理一覧</h1>
 

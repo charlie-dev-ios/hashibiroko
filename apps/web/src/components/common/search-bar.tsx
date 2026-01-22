@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Input } from '@/components/ui/input';
+import { Input } from "@/components/ui/input";
 
 export interface SearchBarProps {
   placeholder?: string;
@@ -9,7 +9,7 @@ export interface SearchBarProps {
 }
 
 export default function SearchBar({
-  placeholder = '検索...',
+  placeholder = "検索...",
   value,
   onChange,
 }: SearchBarProps) {

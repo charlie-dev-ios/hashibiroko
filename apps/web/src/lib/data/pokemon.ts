@@ -1,6 +1,6 @@
-import { PokemonSchema, type Pokemon } from '@/lib/schemas/pokemon';
-import { z } from 'zod';
-import pokemonData from '@/content/pokemon/pokemon.json';
+import { z } from "zod";
+import pokemonData from "@/content/pokemon/pokemon.json";
+import { type Pokemon, PokemonSchema } from "@/lib/schemas/pokemon";
 
 const PokemonArraySchema = z.object({
   pokemon: z.array(PokemonSchema),
@@ -23,7 +23,7 @@ export async function getAllPokemon(): Promise<Pokemon[]> {
  */
 export async function getPokemonById(id: number): Promise<Pokemon | null> {
   const allPokemon = await getAllPokemon();
-  const pokemon = allPokemon.find(p => p.id === id);
+  const pokemon = allPokemon.find((p) => p.id === id);
   return pokemon || null;
 }
 
@@ -34,7 +34,7 @@ export async function getPokemonById(id: number): Promise<Pokemon | null> {
  */
 export async function getPokemonByName(name: string): Promise<Pokemon | null> {
   const allPokemon = await getAllPokemon();
-  const pokemon = allPokemon.find(p => p.name === name);
+  const pokemon = allPokemon.find((p) => p.name === name);
   return pokemon || null;
 }
 
@@ -56,7 +56,7 @@ export async function getEvolutionChain(id: number): Promise<Pokemon[]> {
   // Find previous evolution(s)
   let currentPrevId = pokemon.evolution?.prevId;
   while (currentPrevId) {
-    const prevPokemon = allPokemon.find(p => p.id === currentPrevId);
+    const prevPokemon = allPokemon.find((p) => p.id === currentPrevId);
     if (prevPokemon) {
       chain.unshift(prevPokemon);
       currentPrevId = prevPokemon.evolution?.prevId;
@@ -68,7 +68,7 @@ export async function getEvolutionChain(id: number): Promise<Pokemon[]> {
   // Find next evolution(s)
   const currentNextIds = pokemon.evolution?.nextIds || [];
   for (const nextId of currentNextIds) {
-    const nextPokemon = allPokemon.find(p => p.id === nextId);
+    const nextPokemon = allPokemon.find((p) => p.id === nextId);
     if (nextPokemon) {
       chain.push(nextPokemon);
     }

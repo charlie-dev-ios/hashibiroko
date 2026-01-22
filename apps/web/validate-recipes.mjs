@@ -1,7 +1,7 @@
-import { readFile } from 'fs/promises';
-import { z } from 'zod';
+import { readFile } from "node:fs/promises";
+import { z } from "zod";
 
-const RecipeTypeSchema = z.enum(['カレー', 'サラダ', 'デザート', 'ドリンク']);
+const RecipeTypeSchema = z.enum(["カレー", "サラダ", "デザート", "ドリンク"]);
 
 const RecipeSchema = z.object({
   id: z.number().int().positive(),
@@ -9,16 +9,18 @@ const RecipeSchema = z.object({
   type: RecipeTypeSchema.optional(),
   ingredientCount: z.number().int().nonnegative(),
   energy: z.number().nonnegative(),
-  ingredients: z.array(z.object({
-    name: z.string(),
-    quantity: z.number().int().positive(),
-  })),
+  ingredients: z.array(
+    z.object({
+      name: z.string(),
+      quantity: z.number().int().positive(),
+    }),
+  ),
   imageUrl: z.string().optional(),
 });
 
 async function validateRecipes() {
   try {
-    const data = await readFile('./src/content/recipes/recipes.json', 'utf-8');
+    const data = await readFile("./src/content/recipes/recipes.json", "utf-8");
     const parsed = JSON.parse(data);
 
     console.log(`📊 Total recipes: ${parsed.recipes.length}`);
@@ -26,12 +28,12 @@ async function validateRecipes() {
     const result = z.array(RecipeSchema).safeParse(parsed.recipes);
 
     if (!result.success) {
-      console.error('❌ Validation failed:');
+      console.error("❌ Validation failed:");
       console.error(result.error.message);
       process.exit(1);
     }
 
-    console.log('✅ All recipes are valid!');
+    console.log("✅ All recipes are valid!");
 
     // 統計情報
     const recipes = result.data;
@@ -40,29 +42,28 @@ async function validateRecipes() {
       return acc;
     }, {});
 
-    console.log('\n📈 Statistics:');
+    console.log("\n📈 Statistics:");
     Object.entries(typeCount).forEach(([type, count]) => {
       console.log(`  ${type}: ${count} recipes`);
     });
 
     // ID重複チェック
-    const ids = recipes.map(r => r.id);
+    const ids = recipes.map((r) => r.id);
     const uniqueIds = new Set(ids);
     if (ids.length !== uniqueIds.size) {
-      console.error('❌ Duplicate IDs found!');
+      console.error("❌ Duplicate IDs found!");
       process.exit(1);
     }
-    console.log('✅ No duplicate IDs');
+    console.log("✅ No duplicate IDs");
 
     // 食材のユニークリスト
     const ingredients = new Set();
-    recipes.forEach(recipe => {
-      recipe.ingredients.forEach(ing => ingredients.add(ing.name));
+    recipes.forEach((recipe) => {
+      recipe.ingredients.forEach((ing) => ingredients.add(ing.name));
     });
     console.log(`\n🥘 Unique ingredients: ${ingredients.size}`);
-
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error("❌ Error:", error.message);
     process.exit(1);
   }
 }

@@ -1,11 +1,14 @@
-import type { Recipe } from '@/lib/schemas/recipe';
+import type { Recipe } from "@/lib/schemas/recipe";
 
 /**
  * 料理の必要食材総数を計算
  * クライアントサイドで安全に使用可能
  */
 export function getTotalIngredientCount(recipe: Recipe): number {
-  return recipe.ingredients.reduce((sum, ingredient) => sum + ingredient.quantity, 0);
+  return recipe.ingredients.reduce(
+    (sum, ingredient) => sum + ingredient.quantity,
+    0,
+  );
 }
 
 /**
@@ -28,13 +31,18 @@ export function extractIngredients(recipes: Recipe[]): string[] {
  * 食材でフィルタリング（AND条件: すべての食材を含む）
  * クライアントサイドで安全に使用可能
  */
-export function filterRecipesByIngredients(recipes: Recipe[], ingredientNames: string[]): Recipe[] {
+export function filterRecipesByIngredients(
+  recipes: Recipe[],
+  ingredientNames: string[],
+): Recipe[] {
   if (ingredientNames.length === 0) {
     return recipes;
   }
 
-  return recipes.filter(recipe => {
-    const recipeIngredientNames = recipe.ingredients.map(i => i.name);
-    return ingredientNames.every(name => recipeIngredientNames.includes(name));
+  return recipes.filter((recipe) => {
+    const recipeIngredientNames = recipe.ingredients.map((i) => i.name);
+    return ingredientNames.every((name) =>
+      recipeIngredientNames.includes(name),
+    );
   });
 }

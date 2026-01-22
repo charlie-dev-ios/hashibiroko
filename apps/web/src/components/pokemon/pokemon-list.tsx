@@ -1,5 +1,5 @@
-import PokemonCard from './pokemon-card';
-import type { Pokemon } from '@/lib/schemas/pokemon';
+import type { Pokemon } from "@/lib/schemas/pokemon";
+import PokemonCard from "./pokemon-card";
 
 export interface PokemonListProps {
   pokemon: Pokemon[];

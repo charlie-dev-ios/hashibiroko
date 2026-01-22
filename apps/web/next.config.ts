@@ -4,10 +4,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    formats: ['image/webp'],
+    formats: ["image/webp"],
   },
   // Bunランタイム対応
-  serverExternalPackages: ['zod'],
+  serverExternalPackages: ["zod"],
 };
 
 export default nextConfig;

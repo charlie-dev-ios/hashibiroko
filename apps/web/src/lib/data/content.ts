@@ -1,16 +1,16 @@
-import { ContentSchema, type Content } from '@/lib/schemas/content';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import { type Content, ContentSchema } from "@/lib/schemas/content";
 
-const CONTENT_DIRECTORY = path.join(process.cwd(), 'src', 'content');
+const CONTENT_DIRECTORY = path.join(process.cwd(), "src", "content");
 
 /**
  * Get all markdown content files from the content directory
  * @returns Promise<Content[]> - Array of all content
  */
 export async function getAllContent(): Promise<Content[]> {
-  const categories = ['mechanics', 'strategies', 'teams', 'guides'];
+  const categories = ["mechanics", "strategies", "teams", "guides"];
   const allContent: Content[] = [];
 
   for (const category of categories) {
@@ -24,19 +24,19 @@ export async function getAllContent(): Promise<Content[]> {
     const files = fs.readdirSync(categoryPath);
 
     for (const file of files) {
-      if (!file.endsWith('.md')) {
+      if (!file.endsWith(".md")) {
         continue;
       }
 
       const filePath = path.join(categoryPath, file);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const fileContent = fs.readFileSync(filePath, "utf-8");
 
       // Parse frontmatter
       const { data, content } = matter(fileContent);
 
       // Validate and create content object
       const contentData = ContentSchema.parse({
-        slug: data.slug || file.replace('.md', ''),
+        slug: data.slug || file.replace(".md", ""),
         title: data.title,
         category: data.category || category,
         description: data.description,
@@ -60,7 +60,7 @@ export async function getAllContent(): Promise<Content[]> {
  */
 export async function getContentBySlug(slug: string): Promise<Content | null> {
   const allContent = await getAllContent();
-  const content = allContent.find(c => c.slug === slug);
+  const content = allContent.find((c) => c.slug === slug);
   return content || null;
 }
 
@@ -69,7 +69,9 @@ export async function getContentBySlug(slug: string): Promise<Content | null> {
  * @param category - Content category
  * @returns Promise<Content[]> - Array of content in category
  */
-export async function getContentByCategory(category: string): Promise<Content[]> {
+export async function getContentByCategory(
+  category: string,
+): Promise<Content[]> {
   const allContent = await getAllContent();
-  return allContent.filter(c => c.category === category);
+  return allContent.filter((c) => c.category === category);
 }

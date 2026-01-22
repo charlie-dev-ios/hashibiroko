@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export interface PokemonSearchProps {
   onSearch: (filters: SearchFilters) => void;
@@ -14,15 +20,15 @@ export interface SearchFilters {
   sleepType: string;
   specialty: string;
   sortBy: string;
-  sortOrder: 'asc' | 'desc';
+  sortOrder: "asc" | "desc";
 }
 
 export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
-  const [keyword, setKeyword] = useState('');
-  const [sleepType, setSleepType] = useState('');
-  const [specialty, setSpecialty] = useState('');
-  const [sortBy, setSortBy] = useState('id');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [keyword, setKeyword] = useState("");
+  const [sleepType, setSleepType] = useState("");
+  const [specialty, setSpecialty] = useState("");
+  const [sortBy, setSortBy] = useState("id");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const handleSearch = () => {
     onSearch({
@@ -35,17 +41,17 @@ export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
   };
 
   const handleReset = () => {
-    setKeyword('');
-    setSleepType('');
-    setSpecialty('');
-    setSortBy('id');
-    setSortOrder('asc');
+    setKeyword("");
+    setSleepType("");
+    setSpecialty("");
+    setSortBy("id");
+    setSortOrder("asc");
     onSearch({
-      keyword: '',
-      sleepType: '',
-      specialty: '',
-      sortBy: 'id',
-      sortOrder: 'asc',
+      keyword: "",
+      sleepType: "",
+      specialty: "",
+      sortBy: "id",
+      sortOrder: "asc",
     });
   };
 
@@ -121,7 +127,10 @@ export default function PokemonSearch({ onSearch }: PokemonSearchProps) {
           <label htmlFor="sortOrder" className="block text-sm font-medium mb-2">
             順序
           </label>
-          <Select value={sortOrder} onValueChange={(v) => setSortOrder(v as 'asc' | 'desc')}>
+          <Select
+            value={sortOrder}
+            onValueChange={(v) => setSortOrder(v as "asc" | "desc")}
+          >
             <SelectTrigger id="sortOrder">
               <SelectValue />
             </SelectTrigger>

@@ -1,10 +1,14 @@
-import { Suspense } from 'react';
-import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import Breadcrumb from '@/components/navigation/breadcrumb';
-import PokemonDetail from '@/components/pokemon/pokemon-detail';
-import LoadingIndicator from '@/components/common/loading-indicator';
-import { getAllPokemon, getPokemonById, getEvolutionChain } from '@/lib/data/pokemon';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import LoadingIndicator from "@/components/common/loading-indicator";
+import Breadcrumb from "@/components/navigation/breadcrumb";
+import PokemonDetail from "@/components/pokemon/pokemon-detail";
+import {
+  getAllPokemon,
+  getEvolutionChain,
+  getPokemonById,
+} from "@/lib/data/pokemon";
 
 interface PokemonDetailPageProps {
   params: Promise<{
@@ -12,14 +16,16 @@ interface PokemonDetailPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: PokemonDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PokemonDetailPageProps): Promise<Metadata> {
   const { id } = await params;
-  const pokemonId = parseInt(id, 10);
+  const pokemonId = Number.parseInt(id, 10);
   const pokemon = await getPokemonById(pokemonId);
 
   if (!pokemon) {
     return {
-      title: 'ポケモンが見つかりません',
+      title: "ポケモンが見つかりません",
     };
   }
 
@@ -37,11 +43,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function PokemonDetailPage({ params }: PokemonDetailPageProps) {
+export default async function PokemonDetailPage({
+  params,
+}: PokemonDetailPageProps) {
   const { id } = await params;
-  const pokemonId = parseInt(id, 10);
+  const pokemonId = Number.parseInt(id, 10);
 
-  if (isNaN(pokemonId)) {
+  if (Number.isNaN(pokemonId)) {
     notFound();
   }
 
@@ -57,7 +65,7 @@ export default async function PokemonDetailPage({ params }: PokemonDetailPagePro
     <div className="container mx-auto px-4 py-8">
       <Breadcrumb
         items={[
-          { label: 'ポケモン図鑑', href: '/pokemon' },
+          { label: "ポケモン図鑑", href: "/pokemon" },
           { label: pokemon.name },
         ]}
       />
