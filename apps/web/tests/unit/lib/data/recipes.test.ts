@@ -25,7 +25,7 @@ describe('Recipe Data API', () => {
         expect(recipe).toHaveProperty('type');
         expect(recipe).toHaveProperty('power');
         expect(recipe).toHaveProperty('ingredients');
-        expect(recipe).toHaveProperty('effect');
+        // effect is optional
       });
     });
 
@@ -43,7 +43,7 @@ describe('Recipe Data API', () => {
       const recipe = await getRecipeById(1);
       expect(recipe).not.toBeNull();
       expect(recipe?.id).toBe(1);
-      expect(recipe?.name).toBe('とくせんリンゴジュース');
+      expect(recipe?.name).toBe('しんりょくアボカドグラタン');
     });
 
     it('should return null for non-existent id', async () => {
@@ -54,9 +54,9 @@ describe('Recipe Data API', () => {
     it('should return recipe with complete data structure', async () => {
       const recipe = await getRecipeById(2);
       expect(recipe).not.toBeNull();
-      expect(recipe?.name).toBe('マメバーグカレー');
+      expect(recipe?.name).toBe('いあいぎりすき焼きカレー');
       expect(recipe?.type).toBe('カレー');
-      expect(recipe?.power).toBe(1560);
+      expect(recipe?.power).toBe(20655);
       expect(recipe?.ingredients.length).toBeGreaterThan(0);
     });
   });
@@ -82,19 +82,19 @@ describe('Recipe Data API', () => {
 
   describe('getTotalIngredientCount', () => {
     it('should calculate total ingredient count correctly', async () => {
-      const recipe = await getRecipeById(2); // マメバーグカレー: 7 + 4 = 11
+      const recipe = await getRecipeById(2); // いあいぎりすき焼きカレー: 27+26+26+22 = 101
       expect(recipe).not.toBeNull();
 
       const total = getTotalIngredientCount(recipe!);
-      expect(total).toBe(11);
+      expect(total).toBe(101);
     });
 
     it('should handle single ingredient recipe', async () => {
-      const recipe = await getRecipeById(1); // とくせんリンゴジュース: 7
+      const recipe = await getRecipeById(1); // しんりょくアボカドグラタン: 22+20+41+32 = 115
       expect(recipe).not.toBeNull();
 
       const total = getTotalIngredientCount(recipe!);
-      expect(total).toBe(7);
+      expect(total).toBe(115);
     });
   });
 
@@ -144,13 +144,13 @@ describe('Recipe Data API', () => {
 
     it('should filter recipes containing multiple ingredients (AND condition)', async () => {
       const recipes = await getAllRecipes();
-      const filtered = filterRecipesByIngredients(recipes, ['あまいミツ', 'モモのみ']);
+      const filtered = filterRecipesByIngredients(recipes, ['あまいミツ', 'マメミート']);
 
       expect(filtered.length).toBeGreaterThan(0);
       filtered.forEach((recipe) => {
         const ingredientNames = recipe.ingredients.map(i => i.name);
         expect(ingredientNames).toContain('あまいミツ');
-        expect(ingredientNames).toContain('モモのみ');
+        expect(ingredientNames).toContain('マメミート');
       });
     });
 

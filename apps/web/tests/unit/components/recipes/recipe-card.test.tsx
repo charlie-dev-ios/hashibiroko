@@ -8,6 +8,8 @@ describe('RecipeCard', () => {
     id: 1,
     name: 'とくせんリンゴジュース',
     type: 'デザート',
+    ingredientCount: 7,
+    energy: 85,
     power: 85,
     ingredients: [
       { name: 'あまいミツ', quantity: 7 },
@@ -34,7 +36,8 @@ describe('RecipeCard', () => {
   it('should render ingredient list', () => {
     render(<RecipeCard recipe={mockRecipe} />);
     expect(screen.getByText(/あまいミツ/)).toBeInTheDocument();
-    expect(screen.getByText(/7個/)).toBeInTheDocument();
+    const matches = screen.getAllByText(/7個/);
+    expect(matches.length).toBeGreaterThan(0);
   });
 
   it('should render total ingredient count', () => {

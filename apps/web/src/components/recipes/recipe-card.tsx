@@ -36,7 +36,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           {/* エナジー */}
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-gray-600">エナジー</span>
-            <span className="text-lg font-bold text-blue-600">{recipe.energy.toLocaleString()}</span>
+            <span className="text-lg font-bold text-blue-600">{((recipe as any).power ?? recipe.energy).toLocaleString()}</span>
           </div>
 
           {/* 必要食材の列挙 */}
@@ -46,7 +46,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
               {recipe.ingredients.map((ingredient, index) => (
                 <li key={index} className="text-sm text-gray-700 flex justify-between">
                   <span>{ingredient.name}</span>
-                  <span className="text-gray-500">×{ingredient.quantity}</span>
+                  <span className="text-gray-500">{ingredient.quantity}個</span>
                 </li>
               ))}
             </ul>
@@ -57,6 +57,14 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
             <span className="text-sm font-medium text-gray-600">必要食材の総数</span>
             <span className="text-base font-semibold">{totalIngredients}個</span>
           </div>
+
+          {/* 効果 (存在する場合のみ表示) */}
+          {recipe.effect && (
+            <div className="flex justify-between items-center pt-2 border-t">
+              <span className="text-sm font-medium text-gray-600">効果</span>
+              <span className="text-sm text-gray-800">{recipe.effect}</span>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

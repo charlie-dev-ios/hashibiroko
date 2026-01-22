@@ -9,6 +9,8 @@ describe('RecipeList', () => {
       id: 1,
       name: 'とくせんリンゴジュース',
       type: 'デザート',
+      ingredientCount: 7,
+      energy: 85,
       power: 85,
       ingredients: [{ name: 'あまいミツ', quantity: 7 }],
       effect: 'おてつだい時間短縮',
@@ -18,6 +20,8 @@ describe('RecipeList', () => {
       id: 2,
       name: 'マメバーグカレー',
       type: 'カレー',
+      ingredientCount: 11,
+      energy: 1560,
       power: 1560,
       ingredients: [
         { name: 'マメミート', quantity: 7 },
@@ -30,6 +34,8 @@ describe('RecipeList', () => {
       id: 3,
       name: 'とくせんフルーツサラダ',
       type: 'サラダ',
+      ingredientCount: 16,
+      energy: 450,
       power: 450,
       ingredients: [
         { name: 'あまいミツ', quantity: 3 },
@@ -97,9 +103,9 @@ describe('RecipeList', () => {
     expect(screen.getByText('デザート')).toBeInTheDocument();
     expect(screen.getByText(/85/)).toBeInTheDocument();
 
-    // Check second recipe details
+    // Check second recipe details (toLocaleString() adds comma: 1,560)
     expect(screen.getByText('カレー')).toBeInTheDocument();
-    expect(screen.getByText(/1560/)).toBeInTheDocument();
+    expect(screen.getByText(/1,560/)).toBeInTheDocument();
 
     // Check third recipe details
     expect(screen.getByText('サラダ')).toBeInTheDocument();
