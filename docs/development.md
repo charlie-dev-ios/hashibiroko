@@ -57,7 +57,7 @@
 |----------|------|-----------|------|
 | パッケージマネージャー | Bun | 1.1.40 | 高速・TypeScript対応 |
 | モノレポ管理 | Turborepo | 2.6.3 | ビルドキャッシュ |
-| Linter/Formatter | Biome | - | 今後導入予定 |
+| Linter/Formatter | Biome | 2.3.11 | 高速・一元化 |
 
 ---
 
@@ -232,6 +232,67 @@ export function Component({ ... }: Props) {
 function helperFunction() { ... }
 ```
 
+### Biome設定
+
+#### 概要
+
+本プロジェクトでは、Linter/FormatterとしてBiomeを採用しています。
+
+- **高速**: Rustで実装された高速なツール
+- **一元化**: Linter/Formatterを1つのツールで統合
+- **設定ファイル**: `biome.json`
+
+#### フォーマット設定
+
+- **行幅**: 80文字
+- **インデント**: スペース2つ
+- **引用符**: ダブルクォート
+- **末尾カンマ**: すべて付与
+
+#### 主要Lintルール
+
+本プロジェクトでは以下のカテゴリのルールを有効化しています:
+
+**Style（スタイル）**:
+- `noParameterAssign`: パラメータへの再代入を禁止
+- `useConst`: 再代入されない変数は`const`を使用
+- `useTemplate`: 文字列結合ではなくテンプレートリテラルを使用
+- `useSelfClosingElements`: 自己終了タグを使用
+
+**Correctness（正確性）**:
+- `noUndeclaredDependencies`: 未宣言の依存関係を検出
+
+**Suspicious（疑わしいコード）**:
+- `noVar`: `var`の使用を禁止
+
+**Nursery（実験的）**:
+- `noFloatingPromises`: await忘れのPromiseを検出
+- `noImportCycles`: 循環importを検出
+
+#### 実行コマンド
+
+```bash
+# フォーマット実行
+bun format
+
+# フォーマットチェック（変更なし）
+bun format:check
+
+# Lint実行
+bun lint
+
+# Lintチェック（変更なし）
+bun lint:check
+
+# フォーマット+Lint実行
+bun check
+
+# CI用チェック
+bun check:ci
+```
+
+詳細な設定は `biome.json` を参照してください。
+
 ---
 
 ## テスト戦略
@@ -394,6 +455,16 @@ bun dev
 
 # すべてのアプリをビルド
 bun build
+
+# コード品質チェック・修正（Biome）
+bun format        # フォーマット実行
+bun lint          # Lint実行
+bun check         # フォーマット+Lint実行
+
+# CI用チェック（変更なし）
+bun format:check  # フォーマットチェックのみ
+bun lint:check    # Lintチェックのみ
+bun check:ci      # CI用チェック
 ```
 
 ### apps/web（Webフロントエンド）

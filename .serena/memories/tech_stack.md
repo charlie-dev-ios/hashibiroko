@@ -23,7 +23,7 @@
 ## 開発ツール
 - **パッケージマネージャー**: Bun 1.1.40
 - **モノレポ管理**: Turborepo 2.6.3
-- **Linter/Formatter**: Biome (今後導入予定)
+- **Linter/Formatter**: Biome 2.3.11
 
 ## 開発プラットフォーム
 - **OS**: Darwin (macOS)

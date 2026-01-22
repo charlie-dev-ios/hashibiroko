@@ -46,6 +46,15 @@ export function Component({ ... }: Props) {
 function helperFunction() { ... }
 ```
 
+## Biome設定
+- **フォーマット**: lineWidth 80, double quotes, trailing commas
+- **主要ルール**:
+  - `useConst`: 再代入されない変数は`const`を使用
+  - `noParameterAssign`: パラメータへの再代入を禁止
+  - `useTemplate`: テンプレートリテラルを使用
+  - `noFloatingPromises`: await忘れを検出
+  - `noImportCycles`: 循環importを検出
+
 ## テストファイル配置
 - **テストファイルは実装ファイルと同階層に配置**
 - **命名規則**: `*.test.ts` or `*.test.tsx`
