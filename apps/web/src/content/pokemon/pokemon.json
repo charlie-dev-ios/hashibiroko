@@ -1,109 +1,109 @@
 {
-	"pokemon": [
-		{
-			"id": 172,
-			"name": "ピチュー",
-			"nameKana": "ぴちゅー",
-			"sleepType": "すやすや",
-			"specialty": "スキル",
-			"berry": {
-				"type": "オレンのみ",
-				"baseYield": 4
-			},
-			"skill": {
-				"name": "エナジーチャージS",
-				"description": "最大エネルギー量の3%のエネルギーを獲得する",
-				"maxLevel": 7
-			},
-			"evolution": {
-				"nextIds": [25],
-				"condition": "なかよし度25"
-			},
-			"islands": ["ワカクサ本島"]
-		},
-		{
-			"id": 25,
-			"name": "ピカチュウ",
-			"nameKana": "ぴかちゅう",
-			"sleepType": "すやすや",
-			"specialty": "スキル",
-			"berry": {
-				"type": "オレンのみ",
-				"baseYield": 5
-			},
-			"skill": {
-				"name": "エナジーチャージS",
-				"description": "最大エネルギー量の3%のエネルギーを獲得する",
-				"maxLevel": 7
-			},
-			"evolution": {
-				"prevId": 172,
-				"nextIds": [26],
-				"condition": "レベル20"
-			},
-			"islands": ["ワカクサ本島", "シアンの砂浜"]
-		},
-		{
-			"id": 26,
-			"name": "ライチュウ",
-			"nameKana": "らいちゅう",
-			"sleepType": "すやすや",
-			"specialty": "スキル",
-			"berry": {
-				"type": "オレンのみ",
-				"baseYield": 6
-			},
-			"skill": {
-				"name": "エナジーチャージM",
-				"description": "最大エネルギー量の5%のエネルギーを獲得する",
-				"maxLevel": 7
-			},
-			"evolution": {
-				"prevId": 25
-			},
-			"islands": ["シアンの砂浜", "トープ洞窟"]
-		},
-		{
-			"id": 133,
-			"name": "イーブイ",
-			"nameKana": "いーぶい",
-			"sleepType": "うとうと",
-			"specialty": "きのみ",
-			"berry": {
-				"type": "モモンのみ",
-				"baseYield": 5
-			},
-			"skill": {
-				"name": "げんき回復S",
-				"description": "ランダムで1匹のポケモンのげんきを回復する",
-				"maxLevel": 7
-			},
-			"evolution": {
-				"nextIds": [134, 135, 136, 196, 197, 470, 471, 700],
-				"condition": "しんかのいし"
-			},
-			"islands": ["ワカクサ本島", "シアンの砂浜"]
-		},
-		{
-			"id": 39,
-			"name": "プリン",
-			"nameKana": "ぷりん",
-			"sleepType": "ぐっすり",
-			"specialty": "スキル",
-			"berry": {
-				"type": "モモンのみ",
-				"baseYield": 5
-			},
-			"skill": {
-				"name": "エナジーチャージS",
-				"description": "最大エネルギー量の3%のエネルギーを獲得する",
-				"maxLevel": 7
-			},
-			"evolution": {
-				"nextIds": [40],
-				"condition": "つきのいし"
-			},
-			"islands": ["ワカクサ本島", "ウノハナ雪原"]
-		}
-	]
+  "pokemon": [
+    {
+      "id": 172,
+      "name": "ピチュー",
+      "nameKana": "ぴちゅー",
+      "sleepType": "すやすや",
+      "specialty": "スキル",
+      "berry": {
+        "type": "オレンのみ",
+        "baseYield": 4
+      },
+      "skill": {
+        "name": "エナジーチャージS",
+        "description": "最大エネルギー量の3%のエネルギーを獲得する",
+        "maxLevel": 7
+      },
+      "evolution": {
+        "nextIds": [25],
+        "condition": "なかよし度25"
+      },
+      "islands": ["ワカクサ本島"]
+    },
+    {
+      "id": 25,
+      "name": "ピカチュウ",
+      "nameKana": "ぴかちゅう",
+      "sleepType": "すやすや",
+      "specialty": "スキル",
+      "berry": {
+        "type": "オレンのみ",
+        "baseYield": 5
+      },
+      "skill": {
+        "name": "エナジーチャージS",
+        "description": "最大エネルギー量の3%のエネルギーを獲得する",
+        "maxLevel": 7
+      },
+      "evolution": {
+        "prevId": 172,
+        "nextIds": [26],
+        "condition": "レベル20"
+      },
+      "islands": ["ワカクサ本島", "シアンの砂浜"]
+    },
+    {
+      "id": 26,
+      "name": "ライチュウ",
+      "nameKana": "らいちゅう",
+      "sleepType": "すやすや",
+      "specialty": "スキル",
+      "berry": {
+        "type": "オレンのみ",
+        "baseYield": 6
+      },
+      "skill": {
+        "name": "エナジーチャージM",
+        "description": "最大エネルギー量の5%のエネルギーを獲得する",
+        "maxLevel": 7
+      },
+      "evolution": {
+        "prevId": 25
+      },
+      "islands": ["シアンの砂浜", "トープ洞窟"]
+    },
+    {
+      "id": 133,
+      "name": "イーブイ",
+      "nameKana": "いーぶい",
+      "sleepType": "うとうと",
+      "specialty": "きのみ",
+      "berry": {
+        "type": "モモンのみ",
+        "baseYield": 5
+      },
+      "skill": {
+        "name": "げんき回復S",
+        "description": "ランダムで1匹のポケモンのげんきを回復する",
+        "maxLevel": 7
+      },
+      "evolution": {
+        "nextIds": [134, 135, 136, 196, 197, 470, 471, 700],
+        "condition": "しんかのいし"
+      },
+      "islands": ["ワカクサ本島", "シアンの砂浜"]
+    },
+    {
+      "id": 39,
+      "name": "プリン",
+      "nameKana": "ぷりん",
+      "sleepType": "ぐっすり",
+      "specialty": "スキル",
+      "berry": {
+        "type": "モモンのみ",
+        "baseYield": 5
+      },
+      "skill": {
+        "name": "エナジーチャージS",
+        "description": "最大エネルギー量の3%のエネルギーを獲得する",
+        "maxLevel": 7
+      },
+      "evolution": {
+        "nextIds": [40],
+        "condition": "つきのいし"
+      },
+      "islands": ["ワカクサ本島", "ウノハナ雪原"]
+    }
+  ]
 }

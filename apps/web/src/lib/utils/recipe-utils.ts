@@ -5,7 +5,7 @@ import type { Recipe } from "@/lib/schemas/recipe";
  * クライアントサイドで安全に使用可能
  */
 export function getTotalIngredientCount(recipe: Recipe): number {
-	return recipe.ingredients.reduce((sum, ingredient) => sum + ingredient.quantity, 0);
+  return recipe.ingredients.reduce((sum, ingredient) => sum + ingredient.quantity, 0);
 }
 
 /**
@@ -13,15 +13,15 @@ export function getTotalIngredientCount(recipe: Recipe): number {
  * クライアントサイドで安全に使用可能
  */
 export function extractIngredients(recipes: Recipe[]): string[] {
-	const ingredientSet = new Set<string>();
+  const ingredientSet = new Set<string>();
 
-	recipes.forEach((recipe) => {
-		recipe.ingredients.forEach((ingredient) => {
-			ingredientSet.add(ingredient.name);
-		});
-	});
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      ingredientSet.add(ingredient.name);
+    });
+  });
 
-	return Array.from(ingredientSet).sort();
+  return Array.from(ingredientSet).sort();
 }
 
 /**
@@ -29,12 +29,12 @@ export function extractIngredients(recipes: Recipe[]): string[] {
  * クライアントサイドで安全に使用可能
  */
 export function filterRecipesByIngredients(recipes: Recipe[], ingredientNames: string[]): Recipe[] {
-	if (ingredientNames.length === 0) {
-		return recipes;
-	}
+  if (ingredientNames.length === 0) {
+    return recipes;
+  }
 
-	return recipes.filter((recipe) => {
-		const recipeIngredientNames = recipe.ingredients.map((i) => i.name);
-		return ingredientNames.every((name) => recipeIngredientNames.includes(name));
-	});
+  return recipes.filter((recipe) => {
+    const recipeIngredientNames = recipe.ingredients.map((i) => i.name);
+    return ingredientNames.every((name) => recipeIngredientNames.includes(name));
+  });
 }

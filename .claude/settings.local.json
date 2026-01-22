@@ -1,24 +1,24 @@
 {
-	"permissions": {
-		"allow": [
-			"Bash(git fetch:*)",
-			"Bash(git rev-parse:*)",
-			"Bash(ls:*)",
-			"Bash(mkdir:*)",
-			"Bash(cat:*)",
-			"Bash(find:*)",
-			"Bash(.specify/scripts/bash/**:*)",
-			"Bash(bun run test:*)",
-			"Bash(bun build:*)",
-			"Bash(bun run build:*)",
-			"Skill(speckit.*)",
-			"Skill(speckit.tasks)",
-			"Skill(speckit.specify)",
-			"Bash(grep:*)",
-			"mcp__plugin_serena_serena__*",
-			"WebSearch",
-			"WebFetch(domain:*)",
-			"Bash(bun run test:e2e)"
-		]
-	}
+  "permissions": {
+    "allow": [
+      "Bash(git fetch:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(.specify/scripts/bash/**:*)",
+      "Bash(bun run test:*)",
+      "Bash(bun build:*)",
+      "Bash(bun run build:*)",
+      "Skill(speckit.*)",
+      "Skill(speckit.tasks)",
+      "Skill(speckit.specify)",
+      "Bash(grep:*)",
+      "mcp__plugin_serena_serena__*",
+      "WebSearch",
+      "WebFetch(domain:*)",
+      "Bash(bun run test:e2e)"
+    ]
+  }
 }
