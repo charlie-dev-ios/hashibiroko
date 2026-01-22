@@ -17,6 +17,20 @@ bun dev
 bun build
 ```
 
+### コード品質チェック・修正（Biome）
+```bash
+bun format        # フォーマット実行
+bun lint          # Lint実行
+bun check         # フォーマット+Lint実行
+```
+
+### CI用チェック（変更なし）
+```bash
+bun format:check  # フォーマットチェックのみ
+bun lint:check    # Lintチェックのみ
+bun check:ci      # CI用チェック
+```
+
 ## apps/web（Webフロントエンド）
 
 ### カレントディレクトリを移動
@@ -115,5 +129,6 @@ cd <path>
 1. ブランチ作成: `git checkout -b feature/xxx` or `git checkout -b fix/xxx`
 2. 開発サーバー起動: `bun dev` (ルート) or `cd apps/web && bun dev`
 3. テスト実行（TDD）: `cd apps/web && bun run test:watch`
-4. コミット: `git commit -m "feat(scope): 説明"`
-5. プッシュ: `git push`
+4. コード品質チェック: `bun check` (フォーマット+Lint)
+5. コミット: `git commit -m "feat(scope): 説明"`
+6. プッシュ: `git push`
