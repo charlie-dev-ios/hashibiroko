@@ -1,13 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  Home,
-  Cat,
-  ChefHat,
-  Map,
-  Moon,
-  Users,
-  Settings,
-} from "lucide-react";
+import { Cat, ChefHat, Home, Map, Moon, Settings, Users } from "lucide-react";
 
 export interface NavigationLink {
   /** 表示ラベル */
