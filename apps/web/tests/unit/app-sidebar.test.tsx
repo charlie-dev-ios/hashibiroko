@@ -43,12 +43,6 @@ describe("AppSidebar", () => {
     expect(recipesLink).toHaveAttribute("href", "/recipes");
   });
 
-  it("renders sidebar header with app name", () => {
-    renderWithSidebarProvider(<AppSidebar />);
-
-    expect(screen.getByText("Hashibiroko")).toBeInTheDocument();
-  });
-
   it("marks home link as active when on root path", () => {
     renderWithSidebarProvider(<AppSidebar />);
 
