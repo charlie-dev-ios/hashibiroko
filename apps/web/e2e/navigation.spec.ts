@@ -4,7 +4,8 @@ test.describe("ナビゲーション", () => {
   test("ホームから料理ページに遷移できる", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByRole("link", { name: /料理/ }).click();
+    // メインコンテンツ内の料理リンクをクリック
+    await page.locator("main").getByRole("link", { name: /料理/ }).click();
 
     await expect(page).toHaveURL("/recipes");
     await expect(page.locator("h1")).toContainText("料理一覧");
@@ -30,13 +31,15 @@ test.describe("モバイルナビゲーション", () => {
   test("モバイルメニューが動作する", async ({ page }) => {
     await page.goto("/");
 
-    // モバイルメニューボタンをクリック
-    const menuButton = page.getByRole("button", { name: /メニュー|menu/i });
+    // サイドバートリガーボタンをクリック
+    const menuButton = page.getByRole("button", {
+      name: /Toggle Sidebar|サイドバー/i,
+    });
     if (await menuButton.isVisible()) {
       await menuButton.click();
 
-      // メニューが開く
-      await expect(page.getByRole("navigation")).toBeVisible();
+      // サイドバーが開く（モバイルではSheetとして表示）
+      await expect(page.locator('[data-sidebar="sidebar"]')).toBeVisible();
     }
   });
 });

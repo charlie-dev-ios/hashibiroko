@@ -5,39 +5,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { navigationLinks } from "./navigation-links";
 
-const contentSections = [
-  {
-    title: "ポケモン図鑑",
-    description: "ポケモンの詳細情報を検索・閲覧できます",
-    href: "/pokemon",
-  },
-  {
-    title: "ゲームメカニクス",
-    description: "睡眠タイプやゲームシステムの解説",
-    href: "/mechanics",
-  },
-  {
-    title: "睡眠戦略",
-    description: "効率的な睡眠計測と攻略のコツ",
-    href: "/strategies",
-  },
-  {
-    title: "チーム編成",
-    description: "最適なポケモンチーム編成ガイド",
-    href: "/teams",
-  },
-  {
-    title: "料理情報",
-    description: "レシピときのみの詳細データ",
-    href: "/recipes",
-  },
-  {
-    title: "島ガイド",
-    description: "各フィールドの特徴とポケモン出現情報",
-    href: "/islands",
-  },
-];
+// ホームを除外したコンテンツセクション
+const contentSections = navigationLinks.filter((link) => link.href !== "/");
 
 export default function TopNav() {
   return (
@@ -46,7 +17,8 @@ export default function TopNav() {
         <Link key={section.href} href={section.href}>
           <Card className="h-full transition-colors hover:bg-accent">
             <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                <section.icon className="h-5 w-5" />
                 {section.title}
               </CardTitle>
               <CardDescription className="text-sm">
