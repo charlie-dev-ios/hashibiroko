@@ -61,9 +61,9 @@ test.describe("料理一覧ページ", () => {
   });
 
   test("パンくずリストが表示される", async ({ page }) => {
-    await expect(
-      page.getByRole("navigation", { name: "パンくずリスト" }),
-    ).toBeVisible();
-    await expect(page.getByRole("link", { name: "ホーム" })).toBeVisible();
+    const breadcrumb = page.getByRole("navigation", { name: "パンくずリスト" });
+    await expect(breadcrumb).toBeVisible();
+    // パンくずリスト内のホームリンクを確認
+    await expect(breadcrumb.getByRole("link", { name: "ホーム" })).toBeVisible();
   });
 });

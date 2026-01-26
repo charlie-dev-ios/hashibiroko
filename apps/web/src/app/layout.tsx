@@ -42,7 +42,7 @@ export default function RootLayout({
                 </Link>
               </div>
             </header>
-            <main className="min-h-screen bg-background">{children}</main>
+            <div className="min-h-screen bg-background">{children}</div>
           </SidebarInset>
         </SidebarProvider>
       </body>

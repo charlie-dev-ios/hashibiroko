@@ -13,8 +13,10 @@ test.describe("ホームページ", () => {
   test("ナビゲーションメニューが表示される", async ({ page }) => {
     await page.goto("/");
 
-    // ナビゲーションカードが表示されることを確認
-    await expect(page.getByRole("link", { name: /料理/ })).toBeVisible();
+    // メインコンテンツ内のナビゲーションカードが表示されることを確認
+    await expect(
+      page.locator("main").getByRole("link", { name: /料理/ }),
+    ).toBeVisible();
   });
 
   test("ヘッダーのロゴからホームに遷移できる", async ({ page }) => {
