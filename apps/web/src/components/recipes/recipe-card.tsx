@@ -1,11 +1,5 @@
 import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import type { Recipe } from "@/lib/schemas/recipe";
 import { getTotalIngredientCount } from "@/lib/utils/recipe-utils";
 
@@ -18,75 +12,46 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
   return (
     <Card
-      className="hover:shadow-lg transition-shadow"
+      className="hover:shadow-lg transition-shadow flex overflow-hidden"
       role="article"
       aria-label={`料理: ${recipe.name}`}
       data-testid="recipe-card"
     >
-      <CardHeader>
-        {recipe.imageUrl ? (
-          <div className="relative w-full h-32 mb-2 rounded-md overflow-hidden bg-gray-100">
-            <Image
-              src={recipe.imageUrl}
-              alt={recipe.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            />
-          </div>
-        ) : (
-          <div className="relative w-full h-32 mb-2 rounded-md bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400 text-sm">画像なし</span>
-          </div>
-        )}
-        <CardTitle>{recipe.name}</CardTitle>
-        <CardDescription>{recipe.type}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          {/* エナジー */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-600">エナジー</span>
-            <span className="text-lg font-bold text-blue-600">
-              {((recipe as any).power ?? recipe.energy).toLocaleString()}
-            </span>
-          </div>
+      {/* サムネイル（左側） */}
+      {recipe.imageUrl ? (
+        <div className="relative w-20 h-20 flex-shrink-0 bg-gray-100">
+          <Image
+            src={recipe.imageUrl}
+            alt={recipe.name}
+            fill
+            className="object-cover"
+            sizes="80px"
+          />
+        </div>
+      ) : (
+        <div className="w-20 h-20 flex-shrink-0 bg-gray-200 flex items-center justify-center">
+          <span className="text-gray-400 text-xs">No img</span>
+        </div>
+      )}
 
-          {/* 必要食材の列挙 */}
-          <div>
-            <p className="text-sm font-medium text-gray-600 mb-2">必要食材</p>
-            <ul className="space-y-1">
-              {recipe.ingredients.map((ingredient) => (
-                <li
-                  key={ingredient.name}
-                  className="text-sm text-gray-700 flex justify-between"
-                >
-                  <span>{ingredient.name}</span>
-                  <span className="text-gray-500">{ingredient.quantity}個</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 必要食材の総数 */}
-          <div className="flex justify-between items-center pt-2 border-t">
-            <span className="text-sm font-medium text-gray-600">
-              必要食材の総数
-            </span>
-            <span className="text-base font-semibold">
-              {totalIngredients}個
-            </span>
-          </div>
-
-          {/* 効果 (存在する場合のみ表示) */}
+      {/* コンテンツ（右側） */}
+      <div className="flex-1 p-3 min-w-0">
+        <h3 className="font-semibold text-sm truncate">{recipe.name}</h3>
+        <p className="text-xs text-gray-500">{recipe.type}</p>
+        <div className="flex items-center gap-3 mt-1">
+          <span className="text-sm font-bold text-blue-600">
+            {((recipe as any).power ?? recipe.energy).toLocaleString()}
+          </span>
+          <span className="text-xs text-gray-500">
+            食材{totalIngredients}個
+          </span>
           {recipe.effect && (
-            <div className="flex justify-between items-center pt-2 border-t">
-              <span className="text-sm font-medium text-gray-600">効果</span>
-              <span className="text-sm text-gray-800">{recipe.effect}</span>
-            </div>
+            <span className="text-xs text-green-600 truncate">
+              {recipe.effect}
+            </span>
           )}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }
