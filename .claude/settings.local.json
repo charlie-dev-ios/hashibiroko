@@ -25,7 +25,15 @@
       "Bash(git push)",
       "mcp__github__search_repositories",
       "mcp__github__list_issues",
-      "Bash(bun run test:e2e:*)"
+      "Bash(bun run test:e2e:*)",
+      "mcp__github__issue_read",
+      "Bash(git checkout:*)",
+      "Bash(bun install)",
+      "Bash(bun run check:*)",
+      "Bash(bunx biome:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "mcp__github__create_pull_request"
     ]
   }
 }
