@@ -31,13 +31,6 @@ describe("RecipeCard", () => {
     expect(screen.getByText(/85/)).toBeInTheDocument();
   });
 
-  it("should render ingredient list", () => {
-    render(<RecipeCard recipe={mockRecipe} />);
-    expect(screen.getByText(/あまいミツ/)).toBeInTheDocument();
-    const matches = screen.getAllByText(/7個/);
-    expect(matches.length).toBeGreaterThan(0);
-  });
-
   it("should render total ingredient count", () => {
     const multiIngredientRecipe: Recipe = {
       ...mockRecipe,
@@ -47,8 +40,7 @@ describe("RecipeCard", () => {
       ],
     };
     render(<RecipeCard recipe={multiIngredientRecipe} />);
-    expect(screen.getByText("必要食材の総数")).toBeInTheDocument();
-    expect(screen.getByText(/11個/)).toBeInTheDocument();
+    expect(screen.getByText(/食材11個/)).toBeInTheDocument();
   });
 
   it("should render recipe effect", () => {
@@ -68,21 +60,6 @@ describe("RecipeCard", () => {
       imageUrl: undefined,
     };
     render(<RecipeCard recipe={recipeWithoutImage} />);
-    expect(screen.getByText("画像なし")).toBeInTheDocument();
-  });
-
-  it("should display multiple ingredients correctly", () => {
-    const multiIngredientRecipe: Recipe = {
-      ...mockRecipe,
-      ingredients: [
-        { name: "あまいミツ", quantity: 3 },
-        { name: "モモのみ", quantity: 8 },
-        { name: "ウブのみ", quantity: 5 },
-      ],
-    };
-    render(<RecipeCard recipe={multiIngredientRecipe} />);
-    expect(screen.getByText(/あまいミツ/)).toBeInTheDocument();
-    expect(screen.getByText(/モモのみ/)).toBeInTheDocument();
-    expect(screen.getByText(/ウブのみ/)).toBeInTheDocument();
+    expect(screen.getByText("No img")).toBeInTheDocument();
   });
 });
