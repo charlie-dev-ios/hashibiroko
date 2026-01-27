@@ -25,17 +25,17 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
     >
       <CardHeader>
         {recipe.imageUrl ? (
-          <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-gray-100">
+          <div className="relative w-full h-32 mb-2 rounded-md overflow-hidden bg-gray-100">
             <Image
               src={recipe.imageUrl}
               alt={recipe.name}
               fill
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             />
           </div>
         ) : (
-          <div className="relative w-full h-48 mb-4 rounded-md bg-gray-200 flex items-center justify-center">
+          <div className="relative w-full h-32 mb-2 rounded-md bg-gray-200 flex items-center justify-center">
             <span className="text-gray-400 text-sm">画像なし</span>
           </div>
         )}
@@ -43,7 +43,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
         <CardDescription>{recipe.type}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {/* エナジー */}
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-gray-600">エナジー</span>
