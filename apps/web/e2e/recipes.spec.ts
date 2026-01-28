@@ -21,7 +21,7 @@ test.describe("料理一覧ページ", () => {
 
   test("料理タイプでフィルタリングできる", async ({ page }) => {
     // フィルターセクションを確認
-    const filterSection = page.getByText("料理種別");
+    const filterSection = page.getByRole("heading", { name: "料理種別" });
     await expect(filterSection).toBeVisible();
 
     // カレー・シチューでフィルタ
@@ -64,6 +64,8 @@ test.describe("料理一覧ページ", () => {
     const breadcrumb = page.getByRole("navigation", { name: "パンくずリスト" });
     await expect(breadcrumb).toBeVisible();
     // パンくずリスト内のホームリンクを確認
-    await expect(breadcrumb.getByRole("link", { name: "ホーム" })).toBeVisible();
+    await expect(
+      breadcrumb.getByRole("link", { name: "ホーム" }),
+    ).toBeVisible();
   });
 });

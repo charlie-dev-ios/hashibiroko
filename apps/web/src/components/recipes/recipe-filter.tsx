@@ -41,17 +41,16 @@ export default function RecipeFilter({
   };
 
   return (
-    <div className="mb-6 space-y-4" role="search" aria-label="料理フィルター">
+    <search className="mb-6 space-y-4" aria-label="料理フィルター">
       {/* Type Filter */}
       <div>
         <h3 className="text-sm font-semibold mb-2" id="type-filter-label">
           料理種別
         </h3>
-        <div
-          className="flex flex-wrap gap-2"
-          role="group"
-          aria-labelledby="type-filter-label"
-        >
+        <fieldset className="flex flex-wrap gap-2 border-none p-0">
+          <legend className="sr-only" id="type-filter-label">
+            料理種別
+          </legend>
           <Button
             variant={selectedType === null ? "default" : "outline"}
             onClick={() => onTypeChange(null)}
@@ -73,7 +72,7 @@ export default function RecipeFilter({
               {type.label}
             </Button>
           ))}
-        </div>
+        </fieldset>
       </div>
 
       {/* Ingredient Filter */}
@@ -100,12 +99,13 @@ export default function RecipeFilter({
         </div>
 
         {showIngredients && (
-          <div
+          <fieldset
             id="ingredient-list"
             className="border rounded-md p-4 max-h-60 overflow-y-auto"
-            role="group"
-            aria-labelledby="ingredient-filter-label"
           >
+            <legend className="sr-only" id="ingredient-filter-label">
+              食材フィルター
+            </legend>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {availableIngredients.map((ingredient) => (
                 <div key={ingredient} className="flex items-center space-x-2">
@@ -133,7 +133,7 @@ export default function RecipeFilter({
                 選択をクリア
               </Button>
             )}
-          </div>
+          </fieldset>
         )}
 
         {selectedIngredients.length > 0 && (
@@ -160,6 +160,6 @@ export default function RecipeFilter({
           )}
         </div>
       )}
-    </div>
+    </search>
   );
 }

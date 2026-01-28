@@ -58,9 +58,11 @@ async function validateRecipes() {
 
     // 食材のユニークリスト
     const ingredients = new Set();
-    recipes.forEach((recipe) => {
-      recipe.ingredients.forEach((ing) => ingredients.add(ing.name));
-    });
+    for (const recipe of recipes) {
+      for (const ing of recipe.ingredients) {
+        ingredients.add(ing.name);
+      }
+    }
     console.log(`\n🥘 Unique ingredients: ${ingredients.size}`);
   } catch (error) {
     console.error("❌ Error:", error.message);
@@ -68,4 +70,4 @@ async function validateRecipes() {
   }
 }
 
-validateRecipes();
+void validateRecipes();

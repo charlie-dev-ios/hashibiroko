@@ -19,8 +19,11 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
             ホーム
           </Link>
         </li>
-        {items.map((item, index) => (
-          <li key={index} className="flex items-center space-x-2">
+        {items.map((item) => (
+          <li
+            key={item.href ?? item.label}
+            className="flex items-center space-x-2"
+          >
             <ChevronRight className="h-4 w-4" />
             {item.href ? (
               <Link href={item.href} className="hover:text-foreground">

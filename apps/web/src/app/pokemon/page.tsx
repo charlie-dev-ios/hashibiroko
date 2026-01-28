@@ -29,7 +29,7 @@ export default function PokemonPage() {
       }
     }
 
-    loadPokemon();
+    void loadPokemon();
   }, []);
 
   const handleSearch = (filters: SearchFilters) => {

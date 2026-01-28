@@ -9,6 +9,11 @@ export default defineConfig({
     setupFiles: ["./tests/setup.ts"],
     globals: true,
     include: ["tests/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html", "json-summary"],
+      reportsDirectory: "./coverage",
+    },
   },
   resolve: {
     alias: {

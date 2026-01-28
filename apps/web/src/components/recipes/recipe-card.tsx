@@ -56,9 +56,9 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           <div>
             <p className="text-sm font-medium text-gray-600 mb-2">必要食材</p>
             <ul className="space-y-1">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients.map((ingredient) => (
                 <li
-                  key={index}
+                  key={ingredient.name}
                   className="text-sm text-gray-700 flex justify-between"
                 >
                   <span>{ingredient.name}</span>
