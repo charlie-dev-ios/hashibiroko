@@ -83,17 +83,21 @@ describe("Recipe Data API", () => {
   describe("getTotalIngredientCount", () => {
     it("should calculate total ingredient count correctly", async () => {
       const recipe = await getRecipeById(2); // いあいぎりすき焼きカレー: 27+26+26+22 = 101
-      expect(recipe).not.toBeNull();
+      if (!recipe) {
+        throw new Error("Recipe not found");
+      }
 
-      const total = getTotalIngredientCount(recipe!);
+      const total = getTotalIngredientCount(recipe);
       expect(total).toBe(101);
     });
 
     it("should handle single ingredient recipe", async () => {
       const recipe = await getRecipeById(1); // しんりょくアボカドグラタン: 22+20+41+32 = 115
-      expect(recipe).not.toBeNull();
+      if (!recipe) {
+        throw new Error("Recipe not found");
+      }
 
-      const total = getTotalIngredientCount(recipe!);
+      const total = getTotalIngredientCount(recipe);
       expect(total).toBe(115);
     });
   });

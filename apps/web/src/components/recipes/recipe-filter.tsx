@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { POT_CAPACITY_PRESETS } from "@/lib/constants/pot-capacity";
 import type { RecipeType } from "@/lib/schemas/recipe";
 
 interface RecipeFilterProps {
@@ -11,6 +12,8 @@ interface RecipeFilterProps {
   selectedIngredients: string[];
   onIngredientsChange: (ingredients: string[]) => void;
   availableIngredients: string[];
+  potCapacity: number | null;
+  onPotCapacityChange: (capacity: number | null) => void;
 }
 
 const RECIPE_TYPES: { value: RecipeType; label: string }[] = [
@@ -25,6 +28,8 @@ export default function RecipeFilter({
   selectedIngredients,
   onIngredientsChange,
   availableIngredients,
+  potCapacity,
+  onPotCapacityChange,
 }: RecipeFilterProps) {
   const [showIngredients, setShowIngredients] = useState(false);
 
@@ -70,6 +75,39 @@ export default function RecipeFilter({
               aria-label={`${type.label}の料理を表示`}
             >
               {type.label}
+            </Button>
+          ))}
+        </fieldset>
+      </div>
+
+      {/* Pot Capacity Filter */}
+      <div>
+        <h3 className="text-sm font-semibold mb-2" id="pot-capacity-label">
+          鍋容量
+        </h3>
+        <fieldset className="flex flex-wrap gap-1 border-none p-0">
+          <legend className="sr-only">鍋容量</legend>
+          <Button
+            variant={potCapacity === null ? "default" : "outline"}
+            size="sm"
+            onClick={() => onPotCapacityChange(null)}
+            className="text-xs"
+            aria-pressed={potCapacity === null}
+            aria-label="鍋容量フィルターを解除"
+          >
+            すべて
+          </Button>
+          {POT_CAPACITY_PRESETS.map((preset) => (
+            <Button
+              key={preset.level}
+              variant={potCapacity === preset.capacity ? "default" : "outline"}
+              size="sm"
+              onClick={() => onPotCapacityChange(preset.capacity)}
+              className="text-xs"
+              aria-pressed={potCapacity === preset.capacity}
+              aria-label={`鍋容量を${preset.label}に設定`}
+            >
+              {preset.label}
             </Button>
           ))}
         </fieldset>
@@ -145,7 +183,9 @@ export default function RecipeFilter({
       </div>
 
       {/* Active Filters Summary */}
-      {(selectedType || selectedIngredients.length > 0) && (
+      {(selectedType ||
+        selectedIngredients.length > 0 ||
+        potCapacity !== null) && (
         <div className="text-sm text-gray-600 flex flex-wrap gap-2">
           <span>フィルター:</span>
           {selectedType && (
@@ -156,6 +196,11 @@ export default function RecipeFilter({
           {selectedIngredients.length > 0 && (
             <span className="bg-green-100 text-green-800 px-2 py-1 rounded">
               食材 {selectedIngredients.length}個
+            </span>
+          )}
+          {potCapacity !== null && (
+            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded">
+              鍋容量 {potCapacity}
             </span>
           )}
         </div>
