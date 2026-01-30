@@ -30,13 +30,16 @@
         "useAsConstAssertion": "error",
         "noUnusedTemplateLiteral": "error",
         "useTemplate": "error",
-        "useEnumInitializers": "error"
+        "useEnumInitializers": "error",
+        "noNonNullAssertion": "error"
       },
       "correctness": {
         "noUndeclaredDependencies": "error"
       },
       "suspicious": {
-        "noVar": "on"
+        "noVar": "on",
+        "noExplicitAny": "error",
+        "noDocumentCookie": "error"
       },
       "nursery": {
         "noFloatingPromises": "error",

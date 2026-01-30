@@ -5,6 +5,7 @@ import type { Recipe, RecipeType } from "@/lib/schemas/recipe";
 import {
   extractIngredients,
   filterRecipesByIngredients,
+  filterRecipesByPotCapacity,
 } from "@/lib/utils/recipe-utils";
 import RecipeFilter from "./recipe-filter";
 import RecipeList from "./recipe-list";
@@ -18,6 +19,7 @@ export default function RecipesPageContent({
 }: RecipesPageContentProps) {
   const [selectedType, setSelectedType] = useState<RecipeType | null>(null);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const [potCapacity, setPotCapacity] = useState<number | null>(null);
 
   // Extract all available ingredients
   const availableIngredients = useMemo(() => {
@@ -38,8 +40,11 @@ export default function RecipesPageContent({
       result = filterRecipesByIngredients(result, selectedIngredients);
     }
 
+    // Filter by pot capacity
+    result = filterRecipesByPotCapacity(result, potCapacity);
+
     return result;
-  }, [initialRecipes, selectedType, selectedIngredients]);
+  }, [initialRecipes, selectedType, selectedIngredients, potCapacity]);
 
   return (
     <>
@@ -58,6 +63,8 @@ export default function RecipesPageContent({
         selectedIngredients={selectedIngredients}
         onIngredientsChange={setSelectedIngredients}
         availableIngredients={availableIngredients}
+        potCapacity={potCapacity}
+        onPotCapacityChange={setPotCapacity}
       />
 
       <RecipeList recipes={filteredRecipes} />

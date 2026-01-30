@@ -46,3 +46,19 @@ export function filterRecipesByIngredients(
     );
   });
 }
+
+/**
+ * 鍋容量でフィルタリング
+ * @param recipes 料理リスト
+ * @param maxCapacity 鍋容量（null, 0以下の場合はフィルターなし）
+ * @returns フィルター後の料理リスト
+ */
+export function filterRecipesByPotCapacity(
+  recipes: Recipe[],
+  maxCapacity: number | null,
+): Recipe[] {
+  if (maxCapacity === null || maxCapacity <= 0) {
+    return recipes;
+  }
+  return recipes.filter((recipe) => recipe.ingredientCount <= maxCapacity);
+}

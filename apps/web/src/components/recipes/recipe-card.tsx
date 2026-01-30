@@ -48,7 +48,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium text-gray-600">エナジー</span>
             <span className="text-lg font-bold text-blue-600">
-              {((recipe as any).power ?? recipe.energy).toLocaleString()}
+              {recipe.power.toLocaleString()}
             </span>
           </div>
 
