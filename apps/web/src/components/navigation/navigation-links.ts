@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Calculator,
   Cat,
   ChefHat,
   Cherry,
@@ -56,6 +57,12 @@ export const navigationLinks: NavigationLink[] = [
     href: "/recipes",
     description: "レシピときのみの詳細データ",
     icon: ChefHat,
+  },
+  {
+    title: "食材計算機",
+    href: "/calculator",
+    description: "レシピから必要な食材の合計を計算",
+    icon: Calculator,
   },
   {
     title: "チーム編成",
