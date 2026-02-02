@@ -28,6 +28,33 @@
 - [x] shadcn/ui コンポーネント使用
 - [x] 既存のコード規約に準拠
 
+## Research Findings
+
+### 既存コードパターン分析
+
+**スキーマ定義** (`apps/web/src/lib/schemas/recipe.ts`):
+- `RecipeSchema`: id, name, type, ingredientCount, energy, ingredients配列
+- `ingredients`: `{ name: string, quantity: number }[]`
+- Zodによるバリデーション + transform
+
+**ユーティリティ** (`apps/web/src/lib/utils/recipe-utils.ts`):
+- `getTotalIngredientCount(recipe)`: 単一レシピの食材総数
+- `extractIngredients(recipes)`: 全食材のユニークリスト抽出
+- `filterRecipesByIngredients()`: 食材フィルター
+- `filterRecipesByPotCapacity()`: 鍋容量フィルター
+
+**コンポーネントパターン** (`apps/web/src/components/recipes/`):
+- `recipes-page-content.tsx`: 親コンポーネント（状態管理）
+- `recipe-filter.tsx`: フィルターUI（Button, Checkbox使用）
+- `recipe-list.tsx`: リスト表示
+
+**ナビゲーション** (`apps/web/src/components/navigation/navigation-links.ts`):
+- `NavigationLink`インターフェース: title, href, description, icon
+- lucide-react アイコン使用
+
+**利用可能なUIコンポーネント** (`apps/web/src/components/ui/`):
+- button, card, checkbox, input, label, select, separator, skeleton, tooltip
+
 ## Project Structure
 
 ### Documentation (this feature)
@@ -38,7 +65,9 @@ specs/005-ingredient-calculator/
 ├── data-model.md        # データモデル定義
 ├── spec.md              # 仕様書
 ├── tasks.md             # タスク一覧
-├── quickstart.md        # クイックスタートガイド
+├── quickstart.md        # 動作確認手順
+├── contracts/           # インターフェース定義
+│   └── calculator.ts    # コンポーネントProps定義
 └── checklists/
     └── requirements.md  # 要件チェックリスト
 ```
@@ -50,11 +79,12 @@ apps/web/
 ├── src/
 │   ├── app/
 │   │   └── calculator/
-│   │       └── page.tsx              # 計算機ページ
+│   │       ├── page.tsx              # 計算機ページ
+│   │       └── loading.tsx           # ローディング状態
 │   ├── components/
 │   │   └── calculator/
 │   │       ├── ingredient-calculator.tsx   # メインコンポーネント
-│   │       ├── recipe-search.tsx           # レシピ検索
+│   │       ├── recipe-selector.tsx         # レシピ選択（検索付き）
 │   │       ├── selected-recipe-list.tsx    # 選択レシピ一覧
 │   │       └── ingredient-totals.tsx       # 食材合計表示
 │   └── lib/
@@ -67,7 +97,64 @@ apps/web/
         └── calculator.spec.ts        # E2Eテスト
 ```
 
-**Structure Decision**: 既存のapps/web構造に準拠。計算機専用のコンポーネントディレクトリとユーティリティを追加。
+**Structure Decision**: 既存の`recipes/`構造に準拠。計算機専用のコンポーネントディレクトリとユーティリティを追加。
+
+## Implementation Architecture
+
+### コンポーネント階層
+
+```
+app/calculator/page.tsx (Server Component)
+└── IngredientCalculator (Client Component - 状態管理)
+    ├── RecipeSelector (レシピ検索・選択)
+    │   └── Input + filtered recipe list
+    ├── SelectedRecipeList (選択済みレシピ一覧)
+    │   └── 各レシピ: 名前 + 数量Input + 削除Button
+    └── IngredientTotals (計算結果表示)
+        └── Card: 食材リスト + 総数
+```
+
+### 状態管理
+
+```typescript
+// IngredientCalculator 内部状態
+interface CalculatorState {
+  selectedRecipes: SelectedRecipe[];  // { recipeId, quantity }[]
+  searchQuery: string;                 // 検索文字列
+}
+
+// 派生状態（useMemoで計算）
+- filteredRecipes: 検索結果
+- ingredientTotals: 食材合計配列
+- grandTotal: 食材総数
+```
+
+### データフロー
+
+```
+1. page.tsx: getAllRecipes() でレシピ全件取得 (Server)
+2. IngredientCalculator: initialRecipes を props で受け取り
+3. ユーザー操作 → selectedRecipes 更新 → 自動再計算
+4. calculateIngredientTotals() → IngredientTotals 表示
+```
+
+## Key Implementation Decisions
+
+### D1: レシピ選択UI
+**決定**: Input + ドロップダウンリスト（Comboboxパターン）
+**理由**: 77レシピから素早く検索・選択できる
+
+### D2: 数量入力
+**決定**: type="number" の Input、min=1、max=99
+**理由**: シンプルで直感的、バリデーション容易
+
+### D3: 状態管理
+**決定**: React useState（Zustand不要）
+**理由**: 単一コンポーネント内で完結、外部共有不要
+
+### D4: 計算タイミング
+**決定**: 即時計算（デバウンスなし）
+**理由**: 77レシピ×99数量でもミリ秒単位で完了
 
 ## Complexity Tracking
 
