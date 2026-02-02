@@ -93,8 +93,8 @@ export default function IngredientCalculator({
 
   return (
     <div className="space-y-6">
-      {/* ヘッダー（リセットボタン） - 一時的にコメントアウト */}
-      {/* {selectedRecipes.length > 0 && (
+      {/* ヘッダー（リセットボタン） */}
+      {selectedRecipes.length > 0 && (
         <div className="flex justify-end">
           <Button
             variant="outline"
@@ -106,7 +106,7 @@ export default function IngredientCalculator({
             リセット
           </Button>
         </div>
-      )} */}
+      )}
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* 左カラム: レシピ選択 & 選択済みリスト */}
