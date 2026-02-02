@@ -32,22 +32,32 @@ describe("TopNav", () => {
     render(<TopNav />);
 
     // Use more specific patterns to avoid partial matches with descriptions
-    const pokemonLink = screen.getByRole("link", { name: /^ポケモン ポケモンの詳細情報/i });
+    const pokemonLink = screen.getByRole("link", {
+      name: /^ポケモン ポケモンの詳細情報/i,
+    });
     expect(pokemonLink).toHaveAttribute("href", "/pokemon");
 
     const teamsLink = screen.getByRole("link", { name: /チーム編成/i });
     expect(teamsLink).toHaveAttribute("href", "/teams");
 
-    const recipesLink = screen.getByRole("link", { name: /^料理 レシピときのみ/i });
+    const recipesLink = screen.getByRole("link", {
+      name: /^料理 レシピときのみ/i,
+    });
     expect(recipesLink).toHaveAttribute("href", "/recipes");
 
-    const fieldsLink = screen.getByRole("link", { name: /^フィールド 各フィールド/i });
+    const fieldsLink = screen.getByRole("link", {
+      name: /^フィールド 各フィールド/i,
+    });
     expect(fieldsLink).toHaveAttribute("href", "/islands");
 
-    const berriesLink = screen.getByRole("link", { name: /^きのみ きのみの種類/i });
+    const berriesLink = screen.getByRole("link", {
+      name: /^きのみ きのみの種類/i,
+    });
     expect(berriesLink).toHaveAttribute("href", "/berries");
 
-    const ingredientsLink = screen.getByRole("link", { name: /^食材 食材の入手方法/i });
+    const ingredientsLink = screen.getByRole("link", {
+      name: /^食材 食材の入手方法/i,
+    });
     expect(ingredientsLink).toHaveAttribute("href", "/ingredients");
   });
 
