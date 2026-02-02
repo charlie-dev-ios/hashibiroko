@@ -54,12 +54,15 @@ export default function IngredientCalculator({
     [ingredientTotals],
   );
 
-  // レシピを選択に追加
-  const handleSelectRecipe = useCallback((recipeId: number) => {
+  // レシピの選択をトグル（選択/選択解除）
+  const handleToggleRecipe = useCallback((recipeId: number) => {
     setSelectedRecipes((prev) => {
-      if (prev.some((sr) => sr.recipeId === recipeId)) {
-        return prev;
+      const existing = prev.find((sr) => sr.recipeId === recipeId);
+      if (existing) {
+        // 既に選択されている場合は削除
+        return prev.filter((sr) => sr.recipeId !== recipeId);
       }
+      // 選択されていない場合は追加
       return [...prev, { recipeId, quantity: 1 }];
     });
   }, []);
@@ -111,7 +114,7 @@ export default function IngredientCalculator({
           <RecipeSelector
             recipes={initialRecipes}
             selectedRecipeIds={selectedRecipeIds}
-            onSelectRecipe={handleSelectRecipe}
+            onToggleRecipe={handleToggleRecipe}
           />
           <SelectedRecipeList
             items={selectedItems}
