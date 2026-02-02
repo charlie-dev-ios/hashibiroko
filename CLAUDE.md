@@ -7,6 +7,8 @@
 - N/A（状態管理はReact stateのみ） (003-sidebar-navigation)
 - TypeScript 5.9.3 + Next.js 16.0.8 (App Router), React 19.2.1, shadcn/ui, Tailwind CSS 4.x, Zod 4.3.4 (004-pot-capacity-filter)
 - N/A（クライアントサイドのフィルタリングのみ） (004-pot-capacity-filter)
+- TypeScript 5.9.3 + Next.js 16.0.8 (App Router), React 19.2.1, shadcn/ui, Tailwind CSS 4.x, lucide-react (005-organize-navbar-items)
+- N/A（ナビゲーション定義はコード内の静的配列） (005-organize-navbar-items)
 
 ## Recent Changes
 - 003-sidebar-navigation: Added TypeScript 5.9.3 + Next.js 16.0.8 (App Router), React 19.2.1, shadcn/ui, Tailwind CSS 4.x, lucide-reac
