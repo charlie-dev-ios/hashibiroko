@@ -110,7 +110,7 @@ export default function RecipeSelector({
 
         {/* レシピリスト */}
         <div
-          className="max-h-80 overflow-y-auto overflow-x-hidden border rounded-md"
+          className="max-h-80 overflow-y-auto border rounded-md"
           role="listbox"
           aria-label="レシピ一覧"
         >
