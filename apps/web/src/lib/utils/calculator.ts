@@ -2,6 +2,22 @@ import type { IngredientTotal, SelectedRecipe } from "@/lib/schemas/calculator";
 import type { Recipe } from "@/lib/schemas/recipe";
 
 /**
+ * 鍋容量プリセット（ポケモンスリープの標準的な鍋サイズ）
+ */
+export const POT_CAPACITY_PRESETS = [
+  { label: "Lv.1", value: 15 },
+  { label: "Lv.2", value: 21 },
+  { label: "Lv.3", value: 27 },
+  { label: "Lv.4", value: 33 },
+  { label: "Lv.5", value: 39 },
+  { label: "Lv.6", value: 45 },
+  { label: "Lv.7", value: 51 },
+  { label: "Lv.8", value: 57 },
+] as const;
+
+export type PotCapacityPreset = (typeof POT_CAPACITY_PRESETS)[number];
+
+/**
  * 選択されたレシピから必要食材の合計を計算
  * @param selectedRecipes 選択されたレシピと数量の配列
  * @param allRecipes 全レシピデータ
@@ -47,4 +63,30 @@ export function getGrandTotal(totals: IngredientTotal[]): number {
  */
 export function clampQuantity(value: number): number {
   return Math.max(1, Math.min(99, Math.round(value)));
+}
+
+/**
+ * 選択されたレシピの合計エナジー（料理パワー）を計算
+ * @param selectedRecipes 選択されたレシピと数量の配列
+ * @param allRecipes 全レシピデータ
+ * @returns 合計エナジー
+ */
+export function calculateTotalEnergy(
+  selectedRecipes: SelectedRecipe[],
+  allRecipes: Recipe[],
+): number {
+  return selectedRecipes.reduce((total, selected) => {
+    const recipe = allRecipes.find((r) => r.id === selected.recipeId);
+    if (!recipe) return total;
+    return total + recipe.energy * selected.quantity;
+  }, 0);
+}
+
+/**
+ * 数値をカンマ区切りでフォーマット
+ * @param value 数値
+ * @returns カンマ区切りの文字列
+ */
+export function formatNumber(value: number): string {
+  return value.toLocaleString("ja-JP");
 }

@@ -5,6 +5,7 @@ import type { SelectedRecipe } from "@/lib/schemas/calculator";
 import type { Recipe } from "@/lib/schemas/recipe";
 import {
   calculateIngredientTotals,
+  calculateTotalEnergy,
   clampQuantity,
   getGrandTotal,
 } from "@/lib/utils/calculator";
@@ -20,12 +21,7 @@ export default function IngredientCalculator({
   initialRecipes,
 }: IngredientCalculatorProps) {
   const [selectedRecipes, setSelectedRecipes] = useState<SelectedRecipe[]>([]);
-
-  // 選択済みレシピIDのリスト
-  const selectedRecipeIds = useMemo(
-    () => selectedRecipes.map((sr) => sr.recipeId),
-    [selectedRecipes],
-  );
+  const [potCapacity, setPotCapacity] = useState<number | null>(null);
 
   // 選択済みレシピとそのデータを結合
   const selectedItems = useMemo(() => {
@@ -52,29 +48,34 @@ export default function IngredientCalculator({
     [ingredientTotals],
   );
 
-  // レシピの選択をトグル（選択/選択解除）
-  const handleToggleRecipe = useCallback((recipeId: number) => {
-    setSelectedRecipes((prev) => {
-      const existing = prev.find((sr) => sr.recipeId === recipeId);
-      if (existing) {
-        // 既に選択されている場合は削除
-        return prev.filter((sr) => sr.recipeId !== recipeId);
-      }
-      // 選択されていない場合は追加
-      return [...prev, { recipeId, quantity: 1 }];
-    });
-  }, []);
+  // 合計エナジーを計算
+  const totalEnergy = useMemo(
+    () => calculateTotalEnergy(selectedRecipes, initialRecipes),
+    [selectedRecipes, initialRecipes],
+  );
 
-  // 数量を変更
+  // 数量を変更（0の場合は削除、それ以外は追加または更新）
   const handleQuantityChange = useCallback(
     (recipeId: number, quantity: number) => {
-      setSelectedRecipes((prev) =>
-        prev.map((sr) =>
-          sr.recipeId === recipeId
-            ? { ...sr, quantity: clampQuantity(quantity) }
-            : sr,
-        ),
-      );
+      setSelectedRecipes((prev) => {
+        if (quantity <= 0) {
+          // 数量が0以下の場合は削除
+          return prev.filter((sr) => sr.recipeId !== recipeId);
+        }
+
+        const existing = prev.find((sr) => sr.recipeId === recipeId);
+        if (existing) {
+          // 既存のレシピを更新
+          return prev.map((sr) =>
+            sr.recipeId === recipeId
+              ? { ...sr, quantity: clampQuantity(quantity) }
+              : sr,
+          );
+        }
+
+        // 新規追加
+        return [...prev, { recipeId, quantity: clampQuantity(quantity) }];
+      });
     },
     [],
   );
@@ -89,6 +90,11 @@ export default function IngredientCalculator({
     setSelectedRecipes([]);
   }, []);
 
+  // 鍋容量を変更
+  const handlePotCapacityChange = useCallback((capacity: number | null) => {
+    setPotCapacity(capacity);
+  }, []);
+
   return (
     <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
@@ -96,8 +102,10 @@ export default function IngredientCalculator({
         <div className="space-y-6 min-w-0">
           <RecipeSelector
             recipes={initialRecipes}
-            selectedRecipeIds={selectedRecipeIds}
-            onToggleRecipe={handleToggleRecipe}
+            selectedRecipes={selectedRecipes}
+            onQuantityChange={handleQuantityChange}
+            potCapacity={potCapacity}
+            onPotCapacityChange={handlePotCapacityChange}
           />
           <SelectedRecipeList
             items={selectedItems}
@@ -109,7 +117,11 @@ export default function IngredientCalculator({
 
         {/* 右カラム: 食材合計 */}
         <div>
-          <IngredientTotals totals={ingredientTotals} grandTotal={grandTotal} />
+          <IngredientTotals
+            totals={ingredientTotals}
+            grandTotal={grandTotal}
+            totalEnergy={totalEnergy}
+          />
         </div>
       </div>
     </div>
