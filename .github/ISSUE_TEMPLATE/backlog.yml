@@ -1,7 +1,6 @@
 name: バックログ（機能要望）
 description: 新機能の提案・要望を登録します
-title: "[Backlog] "
-labels: ["phase:backlog"]
+title: ""
 body:
   - type: markdown
     attributes:
