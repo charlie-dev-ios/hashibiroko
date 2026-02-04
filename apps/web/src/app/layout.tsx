@@ -9,6 +9,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -31,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${notoSansJP.variable} font-sans antialiased`}>
+        <Toaster />
         <SidebarProvider>
           <AppSidebar />
           <SidebarInset>

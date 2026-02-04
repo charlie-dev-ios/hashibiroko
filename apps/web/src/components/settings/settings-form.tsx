@@ -1,7 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -11,29 +10,20 @@ import { POT_CAPACITY_PRESETS } from "@/lib/utils/calculator";
 
 export function SettingsForm() {
   const { settings, setSettings, resetSettings, isLoaded } = useUserSettings();
-  const [saved, setSaved] = useState(false);
-
-  // 保存完了メッセージを一定時間後に消す
-  useEffect(() => {
-    if (saved) {
-      const timer = setTimeout(() => setSaved(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [saved]);
 
   const handleRankChange = (value: number | null) => {
     setSettings({ rank: value });
-    setSaved(true);
+    toast.success("ランク設定を保存しました");
   };
 
   const handlePotCapacityChange = (value: number | null) => {
     setSettings({ potCapacity: value });
-    setSaved(true);
+    toast.success("鍋容量設定を保存しました");
   };
 
   const handleReset = () => {
     resetSettings();
-    setSaved(true);
+    toast.success("設定をリセットしました");
   };
 
   if (!isLoaded) {
@@ -48,14 +38,6 @@ export function SettingsForm() {
 
   return (
     <div className="space-y-6 max-w-2xl">
-      {/* 保存完了メッセージ */}
-      {saved && (
-        <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 px-4 py-2 rounded-md">
-          <Check className="h-4 w-4" />
-          設定を保存しました
-        </div>
-      )}
-
       {/* ランク設定 */}
       <Card>
         <CardHeader>
