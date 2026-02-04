@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useUserSettings } from "@/hooks/use-user-settings";
 import type { SelectedRecipe } from "@/lib/schemas/calculator";
 import type { Recipe } from "@/lib/schemas/recipe";
 import {
@@ -19,8 +20,18 @@ interface IngredientCalculatorProps {
 export default function IngredientCalculator({
   initialRecipes,
 }: IngredientCalculatorProps) {
+  const { settings, isLoaded } = useUserSettings();
   const [selectedRecipes, setSelectedRecipes] = useState<SelectedRecipe[]>([]);
   const [potCapacity, setPotCapacity] = useState<number | null>(null);
+  const [hasInitialized, setHasInitialized] = useState(false);
+
+  // ユーザー設定が読み込まれたら、デフォルト鍋容量を設定
+  useEffect(() => {
+    if (isLoaded && !hasInitialized) {
+      setPotCapacity(settings.potCapacity);
+      setHasInitialized(true);
+    }
+  }, [isLoaded, settings.potCapacity, hasInitialized]);
 
   // 食材合計を計算
   const ingredientTotals = useMemo(
