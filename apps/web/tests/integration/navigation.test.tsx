@@ -115,7 +115,7 @@ describe("Navigation Integration Tests", () => {
       render(<BerriesPage />);
 
       expect(
-        screen.getByRole("heading", { name: "きのみ情報", level: 1 }),
+        screen.getByRole("heading", { name: "きのみ一覧", level: 1 }),
       ).toBeInTheDocument();
       // きのみ一覧が表示されていることを確認
       expect(screen.getByText("キーのみ")).toBeInTheDocument();

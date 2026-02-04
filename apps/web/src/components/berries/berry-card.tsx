@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Berry } from "@/lib/schemas/berry";
 import { typeColors, typeTextColors } from "@/lib/schemas/pokemon-type";
 import { cn } from "@/lib/utils";
@@ -12,39 +11,37 @@ export function BerryCard({ berry }: BerryCardProps) {
   const textColor = typeTextColors[berry.type];
 
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2">
-        <div className="flex items-center gap-3">
-          {/* タイプバッジ（アイコン代わり） */}
+    <div
+      className="flex items-center justify-between px-4 py-3 bg-white border rounded-lg hover:bg-gray-50 transition-colors"
+      data-testid="berry-card"
+    >
+      <div className="flex items-center gap-3">
+        {/* タイプバッジ（アイコン代わり） */}
+        <span
+          className={cn(
+            "inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold",
+            bgColor,
+            textColor,
+          )}
+        >
+          {berry.type.slice(0, 2)}
+        </span>
+        <div>
+          <span className="font-medium text-gray-900">{berry.name}</span>
           <span
             className={cn(
-              "inline-flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold",
-              bgColor,
-              textColor,
-            )}
-          >
-            {berry.type.slice(0, 2)}
-          </span>
-          <CardTitle className="text-lg">{berry.name}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-center justify-between">
-          <span
-            className={cn(
-              "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+              "ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
               bgColor,
               textColor,
             )}
           >
             {berry.type}
           </span>
-          <div className="text-right">
-            <span className="text-muted-foreground text-xs">基礎エナジー</span>
-            <p className="text-xl font-bold">{berry.energy}</p>
-          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+      <span className="text-blue-600 font-bold tabular-nums">
+        {berry.energy}
+      </span>
+    </div>
   );
 }
