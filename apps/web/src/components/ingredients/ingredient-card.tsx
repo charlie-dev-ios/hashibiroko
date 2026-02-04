@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Ingredient } from "@/lib/schemas/ingredient";
 
 interface IngredientCardProps {
@@ -7,23 +6,14 @@ interface IngredientCardProps {
 
 export default function IngredientCard({ ingredient }: IngredientCardProps) {
   return (
-    <Card
-      className="hover:shadow-lg transition-shadow"
-      role="article"
-      aria-label={`食材: ${ingredient.name}`}
+    <div
+      className="flex items-center justify-between px-4 py-3 bg-white border rounded-lg hover:bg-gray-50 transition-colors"
       data-testid="ingredient-card"
     >
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{ingredient.name}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-gray-600">エナジー</span>
-          <span className="text-lg font-bold text-blue-600">
-            {ingredient.energy.toLocaleString()}
-          </span>
-        </div>
-      </CardContent>
-    </Card>
+      <span className="font-medium text-gray-900">{ingredient.name}</span>
+      <span className="text-blue-600 font-bold tabular-nums">
+        {ingredient.energy.toLocaleString()}
+      </span>
+    </div>
   );
 }

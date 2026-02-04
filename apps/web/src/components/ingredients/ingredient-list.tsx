@@ -13,10 +13,18 @@ export default function IngredientList({ ingredients }: IngredientListProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {ingredients.map((ingredient) => (
-        <IngredientCard key={ingredient.id} ingredient={ingredient} />
-      ))}
+    <div className="space-y-4">
+      {/* ヘッダー */}
+      <div className="flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-500 border-b">
+        <span>食材名</span>
+        <span>エナジー</span>
+      </div>
+      {/* リスト */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        {ingredients.map((ingredient) => (
+          <IngredientCard key={ingredient.id} ingredient={ingredient} />
+        ))}
+      </div>
     </div>
   );
 }

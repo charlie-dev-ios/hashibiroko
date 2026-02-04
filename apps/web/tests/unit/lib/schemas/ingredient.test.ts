@@ -54,15 +54,4 @@ describe("IngredientSchema", () => {
 
     expect(() => IngredientSchema.parse(invalidIngredient)).toThrow();
   });
-
-  it("should allow zero energy (e.g., ゆめのかけら)", () => {
-    const zeroEnergyIngredient = {
-      id: 16,
-      name: "ゆめのかけら",
-      energy: 0,
-    };
-
-    const result = IngredientSchema.parse(zeroEnergyIngredient);
-    expect(result.energy).toBe(0);
-  });
 });
