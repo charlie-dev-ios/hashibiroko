@@ -191,7 +191,7 @@ export default function RecipeSelector({
           aria-label="レシピ一覧"
         >
           {filteredRecipes.length === 0 ? (
-            <p className="p-3 text-sm text-gray-500 text-center">
+            <p className="p-4 text-sm text-gray-500 text-center">
               該当するレシピがありません
             </p>
           ) : (
@@ -202,23 +202,23 @@ export default function RecipeSelector({
                 return (
                   <li
                     key={recipe.id}
-                    className={`p-3 ${isSelected ? "bg-blue-50" : "hover:bg-gray-50"} transition-colors`}
+                    className={`p-4 ${isSelected ? "bg-blue-50" : "hover:bg-gray-50"} transition-colors`}
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="space-y-3">
                       {/* レシピ情報 */}
-                      <div className="min-w-0 flex-1">
+                      <div>
                         <p
-                          className={`text-sm font-medium truncate ${
+                          className={`text-sm font-medium leading-relaxed ${
                             isSelected ? "text-blue-700" : ""
                           }`}
                         >
                           {recipe.name}
                         </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                          <span>{recipe.type}</span>
-                          <span>・</span>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-gray-500">
+                          <span className="bg-gray-100 px-2 py-0.5 rounded">
+                            {recipe.type}
+                          </span>
                           <span>食材 {recipe.ingredientCount}個</span>
-                          <span>・</span>
                           <span className="text-amber-600 font-medium">
                             {formatNumber(recipe.energy)}
                           </span>
@@ -226,16 +226,16 @@ export default function RecipeSelector({
                       </div>
 
                       {/* 数量コントロール */}
-                      <div className="flex items-center gap-1 flex-shrink-0">
+                      <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="icon"
-                          className="h-8 w-8"
+                          className="h-9 w-9"
                           onClick={() => handleDecrement(recipe.id)}
                           disabled={quantity === 0}
                           aria-label={`${recipe.name}の数量を減らす`}
                         >
-                          <Minus className="h-3 w-3" />
+                          <Minus className="h-4 w-4" />
                         </Button>
                         <Input
                           type="number"
@@ -246,18 +246,18 @@ export default function RecipeSelector({
                             handleQuantityInput(recipe.id, e.target.value)
                           }
                           placeholder="0"
-                          className="w-12 h-8 text-center text-sm px-1"
+                          className="w-14 h-9 text-center text-sm"
                           aria-label={`${recipe.name}の数量`}
                         />
                         <Button
                           variant="outline"
                           size="icon"
-                          className="h-8 w-8"
+                          className="h-9 w-9"
                           onClick={() => handleIncrement(recipe.id)}
                           disabled={quantity >= 99}
                           aria-label={`${recipe.name}の数量を増やす`}
                         >
-                          <Plus className="h-3 w-3" />
+                          <Plus className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
