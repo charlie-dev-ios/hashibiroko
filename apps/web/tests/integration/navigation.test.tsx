@@ -111,13 +111,15 @@ describe("Navigation Integration Tests", () => {
       expect(screen.getByText(/コンテンツは準備中です/i)).toBeInTheDocument();
     });
 
-    it("should render Berries page with placeholder", () => {
+    it("should render Berries page with berry list", () => {
       render(<BerriesPage />);
 
       expect(
-        screen.getByRole("heading", { name: "きのみ情報", level: 1 }),
+        screen.getByRole("heading", { name: "きのみ一覧", level: 1 }),
       ).toBeInTheDocument();
-      expect(screen.getByText(/準備中です/i)).toBeInTheDocument();
+      // きのみ一覧が表示されていることを確認
+      expect(screen.getByText("キーのみ")).toBeInTheDocument();
+      expect(screen.getByText("オレンのみ")).toBeInTheDocument();
     });
 
     it("should render Ingredients page with content", async () => {
