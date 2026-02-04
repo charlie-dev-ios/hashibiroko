@@ -120,13 +120,17 @@ describe("Navigation Integration Tests", () => {
       expect(screen.getByText(/準備中です/i)).toBeInTheDocument();
     });
 
-    it("should render Ingredients page with placeholder", () => {
-      render(<IngredientsPage />);
+    it("should render Ingredients page with content", async () => {
+      const page = await IngredientsPage();
+      render(page);
 
       expect(
-        screen.getByRole("heading", { name: "食材情報", level: 1 }),
+        screen.getByRole("heading", { name: "食材一覧", level: 1 }),
       ).toBeInTheDocument();
-      expect(screen.getByText(/準備中です/i)).toBeInTheDocument();
+      expect(
+        screen.getByRole("navigation", { name: "パンくずリスト" }),
+      ).toBeInTheDocument();
+      expect(screen.getByText("ホーム")).toBeInTheDocument();
     });
   });
 
