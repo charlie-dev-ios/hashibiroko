@@ -23,6 +23,7 @@ interface RecipeSelectorProps {
   recipes: Recipe[];
   selectedRecipes: SelectedRecipe[];
   onQuantityChange: (recipeId: number, quantity: number) => void;
+  onReset: () => void;
   potCapacity: number | null;
   onPotCapacityChange: (capacity: number | null) => void;
 }
@@ -31,6 +32,7 @@ export default function RecipeSelector({
   recipes,
   selectedRecipes,
   onQuantityChange,
+  onReset,
   potCapacity,
   onPotCapacityChange,
 }: RecipeSelectorProps) {
@@ -104,8 +106,18 @@ export default function RecipeSelector({
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-lg">レシピを選択</CardTitle>
+        {selectedCount > 0 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onReset}
+            className="text-xs"
+          >
+            リセット
+          </Button>
+        )}
       </CardHeader>
       <CardContent className="space-y-3">
         {/* 鍋容量フィルター */}

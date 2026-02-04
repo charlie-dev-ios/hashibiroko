@@ -71,6 +71,11 @@ export default function IngredientCalculator({
     setPotCapacity(capacity);
   }, []);
 
+  // 選択をリセット
+  const handleReset = useCallback(() => {
+    setSelectedRecipes([]);
+  }, []);
+
   return (
     <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
@@ -80,6 +85,7 @@ export default function IngredientCalculator({
             recipes={initialRecipes}
             selectedRecipes={selectedRecipes}
             onQuantityChange={handleQuantityChange}
+            onReset={handleReset}
             potCapacity={potCapacity}
             onPotCapacityChange={handlePotCapacityChange}
           />
