@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings } from "lucide-react";
+import { Minus, Plus, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserSettings } from "@/hooks/use-user-settings";
 import { POT_CAPACITY_PRESETS } from "@/lib/utils/calculator";
@@ -32,6 +31,22 @@ export function AccountMenu() {
   const handleReset = () => {
     resetSettings();
     toast.success("設定をリセットしました");
+  };
+
+  const incrementRank = () => {
+    const current = settings.rank ?? 0;
+    if (current < 60) {
+      handleRankChange(current + 1);
+    }
+  };
+
+  const decrementRank = () => {
+    const current = settings.rank ?? 1;
+    if (current > 1) {
+      handleRankChange(current - 1);
+    } else {
+      handleRankChange(null);
+    }
   };
 
   return (
@@ -57,31 +72,46 @@ export function AccountMenu() {
             <div className="space-y-3">
               <Label htmlFor="rank">睡眠リサーチランク</Label>
               <div className="flex items-center gap-3">
-                <Input
-                  id="rank"
-                  type="number"
-                  min={1}
-                  max={60}
-                  placeholder="1-60"
-                  value={settings.rank ?? ""}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === "") {
-                      handleRankChange(null);
-                    } else {
-                      const num = Number.parseInt(value, 10);
-                      if (!Number.isNaN(num) && num >= 1 && num <= 60) {
-                        handleRankChange(num);
-                      }
-                    }
-                  }}
-                  className="w-24"
-                />
-                <span className="text-sm text-muted-foreground">
-                  {settings.rank === null
-                    ? "未設定"
-                    : `ランク ${settings.rank}`}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={decrementRank}
+                  disabled={settings.rank === null}
+                  aria-label="ランクを下げる"
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="w-16 text-center font-medium">
+                  {settings.rank ?? "-"}
                 </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={incrementRank}
+                  disabled={settings.rank === 60}
+                  aria-label="ランクを上げる"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <input
+                id="rank"
+                type="range"
+                min={1}
+                max={60}
+                value={settings.rank ?? 1}
+                onChange={(e) => {
+                  const value = Number.parseInt(e.target.value, 10);
+                  handleRankChange(value);
+                }}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+              />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>1</span>
+                <span>30</span>
+                <span>60</span>
               </div>
             </div>
 
