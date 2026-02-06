@@ -21,53 +21,79 @@ export interface NavigationLink {
   icon: LucideIcon;
 }
 
+export interface NavigationSection {
+  /** セクション名 */
+  label: string;
+  /** セクション内のリンク */
+  links: NavigationLink[];
+}
+
+/** ホームリンク（セクション外） */
+export const homeLink: NavigationLink = {
+  title: "ホーム",
+  href: "/",
+  description: "トップページ",
+  icon: Home,
+};
+
+/** セクション分けされたナビゲーション */
+export const navigationSections: NavigationSection[] = [
+  {
+    label: "基本データ",
+    links: [
+      {
+        title: "フィールド",
+        href: "/islands",
+        description: "各フィールドの特徴とポケモン出現情報",
+        icon: MapIcon,
+      },
+      {
+        title: "ポケモン",
+        href: "/pokemon",
+        description: "ポケモンの詳細情報を検索・閲覧",
+        icon: Cat,
+      },
+      {
+        title: "きのみ",
+        href: "/berries",
+        description: "きのみの種類と効果",
+        icon: Cherry,
+      },
+      {
+        title: "食材",
+        href: "/ingredients",
+        description: "食材の入手方法と使い道",
+        icon: Egg,
+      },
+      {
+        title: "料理",
+        href: "/recipes",
+        description: "レシピときのみの詳細データ",
+        icon: ChefHat,
+      },
+    ],
+  },
+  {
+    label: "攻略",
+    links: [
+      {
+        title: "食材計算機",
+        href: "/calculator",
+        description: "レシピから必要な食材の合計を計算",
+        icon: Calculator,
+      },
+      {
+        title: "チーム編成",
+        href: "/teams",
+        description: "最適なポケモンチーム編成ガイド",
+        icon: Users,
+      },
+    ],
+  },
+];
+
+/** 後方互換性のためのフラットなリンク配列 */
 export const navigationLinks: NavigationLink[] = [
-  {
-    title: "ホーム",
-    href: "/",
-    description: "トップページ",
-    icon: Home,
-  },
-  {
-    title: "フィールド",
-    href: "/islands",
-    description: "各フィールドの特徴とポケモン出現情報",
-    icon: MapIcon,
-  },
-  {
-    title: "ポケモン",
-    href: "/pokemon",
-    description: "ポケモンの詳細情報を検索・閲覧",
-    icon: Cat,
-  },
-  {
-    title: "きのみ",
-    href: "/berries",
-    description: "きのみの種類と効果",
-    icon: Cherry,
-  },
-  {
-    title: "食材",
-    href: "/ingredients",
-    description: "食材の入手方法と使い道",
-    icon: Egg,
-  },
-  {
-    title: "料理",
-    href: "/recipes",
-    description: "レシピときのみの詳細データ",
-    icon: ChefHat,
-  },
-  {
-    title: "食材計算機",
-    href: "/calculator",
-    description: "レシピから必要な食材の合計を計算",
-    icon: Calculator,
-  },
-  {
-    title: "チーム編成",
-    href: "/teams",
-    description: "最適なポケモンチーム編成ガイド",
-    icon: Users,
-  },
+  homeLink,
+  ...navigationSections.flatMap((section) => section.links),
 ];

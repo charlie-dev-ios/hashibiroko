@@ -23,12 +23,15 @@ vi.mock("next/navigation", () => ({
 
 describe("Navigation Integration Tests", () => {
   describe("Home Page", () => {
-    it("should render the top page with all navigation cards", () => {
+    it("should render the top page with all navigation cards grouped by section", () => {
       render(<HomePage />);
 
       expect(
         screen.getByText("ポケモンスリープ攻略サイト"),
       ).toBeInTheDocument();
+      // セクションラベルが表示されること
+      expect(screen.getByText("基本データ")).toBeInTheDocument();
+      expect(screen.getByText("攻略")).toBeInTheDocument();
       expect(screen.getByText("ポケモン")).toBeInTheDocument();
       expect(screen.getByText("チーム編成")).toBeInTheDocument();
       expect(screen.getByText("料理")).toBeInTheDocument();

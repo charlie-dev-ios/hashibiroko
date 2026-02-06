@@ -18,8 +18,12 @@ const renderWithSidebarProvider = (ui: React.ReactElement) => {
 };
 
 describe("AppSidebar", () => {
-  it("renders navigation links", () => {
+  it("renders navigation links with section labels", () => {
     renderWithSidebarProvider(<AppSidebar />);
+
+    // セクションラベルが表示されること
+    expect(screen.getByText("基本データ")).toBeInTheDocument();
+    expect(screen.getByText("攻略")).toBeInTheDocument();
 
     expect(screen.getByText("ホーム")).toBeInTheDocument();
     expect(screen.getByText("ポケモン")).toBeInTheDocument();

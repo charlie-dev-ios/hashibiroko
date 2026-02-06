@@ -12,13 +12,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { navigationLinks } from "./navigation-links";
+import { navigationSections } from "./navigation-links";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
-
-  // ホームを除いたナビゲーションリンクを取得
-  const menuLinks = navigationLinks.filter((link) => link.href !== "/");
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -32,23 +29,30 @@ export default function MobileNav() {
           <SheetTitle>メニュー</SheetTitle>
           <SheetDescription>ポケモンスリープ攻略サイト</SheetDescription>
         </SheetHeader>
-        <nav className="mt-8">
-          <ul className="space-y-4">
-            {menuLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block rounded-lg p-3 transition-colors hover:bg-accent"
-                  onClick={() => setOpen(false)}
-                >
-                  <div className="font-medium">{link.title}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {link.description}
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav className="mt-8 space-y-6">
+          {navigationSections.map((section) => (
+            <div key={section.label}>
+              <h3 className="mb-2 px-3 text-sm font-semibold text-muted-foreground">
+                {section.label}
+              </h3>
+              <ul className="space-y-1">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="block rounded-lg p-3 transition-colors hover:bg-accent"
+                      onClick={() => setOpen(false)}
+                    >
+                      <div className="font-medium">{link.title}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {link.description}
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
       </SheetContent>
     </Sheet>
