@@ -25,11 +25,11 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T001 Test IslandSchema and SnorlaxRankSchema validation in `apps/web/tests/unit/lib/schemas/island.test.ts` — valid/invalid data cases, SnorlaxRankName enum, array length=6 constraint
-- [ ] T002 Extend IslandSchema with SnorlaxRankNameSchema, SnorlaxRankSchema in `apps/web/src/lib/schemas/island.ts` — data-model.md のZodスキーマ設計に従う
-- [ ] T003 Create islands.json with all field data in `apps/web/src/content/islands/islands.json` — 全フィールド（ワカクサ本島、シアンの砂浜、トープ洞窟、ウノハナ雪原、ラピスラズリ湖畔 等）のデータをdata-model.mdのサンプル構造に従い作成
-- [ ] T004 Test data access functions (getAllIslands, getIslandById, getIslandByName) in `apps/web/tests/unit/lib/data/islands.test.ts` — 全件取得、ID検索、名前検索、存在しないID/名前のundefined返却
-- [ ] T005 Implement data access functions in `apps/web/src/lib/data/islands.ts` — islands.json直接import + Zodバリデーション、contracts/data-access.mdの契約に従う
+- [X] T001 Test IslandSchema and SnorlaxRankSchema validation in `apps/web/tests/unit/lib/schemas/island.test.ts` — valid/invalid data cases, SnorlaxRankName enum, array length=6 constraint
+- [X] T002 Extend IslandSchema with SnorlaxRankNameSchema, SnorlaxRankSchema in `apps/web/src/lib/schemas/island.ts` — data-model.md のZodスキーマ設計に従う
+- [X] T003 Create islands.json with all field data in `apps/web/src/content/islands/islands.json` — 全フィールド（ワカクサ本島、シアンの砂浜、トープ洞窟、ウノハナ雪原、ラピスラズリ湖畔 等）のデータをdata-model.mdのサンプル構造に従い作成
+- [X] T004 Test data access functions (getAllIslands, getIslandById, getIslandByName) in `apps/web/tests/unit/lib/data/islands.test.ts` — 全件取得、ID検索、名前検索、存在しないID/名前のundefined返却
+- [X] T005 Implement data access functions in `apps/web/src/lib/data/islands.ts` — islands.json直接import + Zodバリデーション、contracts/data-access.mdの契約に従う
 
 **Checkpoint**: Foundation ready — スキーマ・データ・アクセス関数が揃い、ユーザーストーリー実装を開始可能
 
@@ -45,15 +45,15 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T006 [P] [US1] Test IslandCard in `apps/web/tests/unit/components/islands/island-card.test.tsx` — フィールド名表示、固定きのみ名表示、ランダム時「ランダム」表示、リンク先 `/islands/{id}`、aria-label/data-testid
-- [ ] T007 [P] [US1] Test IslandList in `apps/web/tests/unit/components/islands/island-list.test.tsx` — 0件時の空メッセージ、1件/複数件でのグリッド表示、全カードのレンダリング
+- [X] T006 [P] [US1] Test IslandCard in `apps/web/tests/unit/components/islands/island-card.test.tsx` — フィールド名表示、固定きのみ名表示、ランダム時「ランダム」表示、リンク先 `/islands/{id}`、aria-label/data-testid
+- [X] T007 [P] [US1] Test IslandList in `apps/web/tests/unit/components/islands/island-list.test.tsx` — 0件時の空メッセージ、1件/複数件でのグリッド表示、全カードのレンダリング
 
 ### Implementation for User Story 1
 
-- [ ] T008 [P] [US1] Implement IslandCard in `apps/web/src/components/islands/island-card.tsx` — shadcn/ui Card + Next.js Link、contracts/components.mdのIslandCard契約に従う
-- [ ] T009 [P] [US1] Implement IslandList in `apps/web/src/components/islands/island-list.tsx` — レスポンシブグリッド（1列→md:2列→lg:3列）、contracts/components.mdのIslandList契約に従う
-- [ ] T010 [US1] Replace islands list page in `apps/web/src/app/islands/page.tsx` — 既存プレースホルダーを置換、getAllIslands()でデータ取得、IslandListに渡す、metadata設定
-- [ ] T011 [US1] Create basic detail page in `apps/web/src/app/islands/[id]/page.tsx` — generateStaticParams、generateMetadata、getIslandById、notFound()、フィールド名・説明・とくいきのみの基本情報表示、Breadcrumb
+- [X] T008 [P] [US1] Implement IslandCard in `apps/web/src/components/islands/island-card.tsx` — shadcn/ui Card + Next.js Link、contracts/components.mdのIslandCard契約に従う
+- [X] T009 [P] [US1] Implement IslandList in `apps/web/src/components/islands/island-list.tsx` — レスポンシブグリッド（1列→md:2列→lg:3列）、contracts/components.mdのIslandList契約に従う
+- [X] T010 [US1] Replace islands list page in `apps/web/src/app/islands/page.tsx` — 既存プレースホルダーを置換、getAllIslands()でデータ取得、IslandListに渡す、metadata設定
+- [X] T011 [US1] Create basic detail page in `apps/web/src/app/islands/[id]/page.tsx` — generateStaticParams、generateMetadata、getIslandById、notFound()、フィールド名・説明・とくいきのみの基本情報表示、Breadcrumb
 
 **Checkpoint**: US1完了 — 島ガイド一覧からフィールド選択→基本情報（名前・とくいきのみ）が確認可能
 
@@ -69,12 +69,12 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T012 [P] [US2] Test SnorlaxRankTable in `apps/web/tests/unit/components/islands/snorlax-rank-table.test.tsx` — 6ランク全表示、ランク名の順序、エナジー値のカンマ区切り表示（例: 16,089）、テーブル構造（thead/tbody）
+- [X] T012 [P] [US2] Test SnorlaxRankTable in `apps/web/tests/unit/components/islands/snorlax-rank-table.test.tsx` — 6ランク全表示、ランク名の順序、エナジー値のカンマ区切り表示（例: 16,089）、テーブル構造（thead/tbody）
 
 ### Implementation for User Story 2
 
-- [ ] T013 [US2] Implement SnorlaxRankTable in `apps/web/src/components/islands/snorlax-rank-table.tsx` — shadcn/ui Table、contracts/components.mdのSnorlaxRankTable契約に従う
-- [ ] T014 [US2] Add SnorlaxRankTable to detail page in `apps/web/src/app/islands/[id]/page.tsx` — island.snorlaxRanksをSnorlaxRankTableに渡す
+- [X] T013 [US2] Implement SnorlaxRankTable in `apps/web/src/components/islands/snorlax-rank-table.tsx` — shadcn/ui Table、contracts/components.mdのSnorlaxRankTable契約に従う
+- [X] T014 [US2] Add SnorlaxRankTable to detail page in `apps/web/src/app/islands/[id]/page.tsx` — island.snorlaxRanksをSnorlaxRankTableに渡す
 
 **Checkpoint**: US2完了 — フィールド詳細ページでカビゴン評価ごとの必要エナジーが一覧確認可能
 
@@ -90,12 +90,12 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T015 [P] [US3] Test RankPokemonList in `apps/web/tests/unit/components/islands/rank-pokemon-list.test.tsx` — ランクごとのセクション表示、ポケモン名表示、`/pokemon/{id}`へのリンク、新規出現なしランクの「なし」表示
+- [X] T015 [P] [US3] Test RankPokemonList in `apps/web/tests/unit/components/islands/rank-pokemon-list.test.tsx` — ランクごとのセクション表示、ポケモン名表示、`/pokemon/{id}`へのリンク、新規出現なしランクの「なし」表示
 
 ### Implementation for User Story 3
 
-- [ ] T016 [US3] Implement RankPokemonList in `apps/web/src/components/islands/rank-pokemon-list.tsx` — ランクごとにセクション分け、各ポケモンはLink付き表示、contracts/components.mdのRankPokemonList契約に従う
-- [ ] T017 [US3] Add RankPokemonList to detail page in `apps/web/src/app/islands/[id]/page.tsx` — pokemonMap構築（getAllPokemon→Map変換）、RankPokemonListに渡す
+- [X] T016 [US3] Implement RankPokemonList in `apps/web/src/components/islands/rank-pokemon-list.tsx` — ランクごとにセクション分け、各ポケモンはLink付き表示、contracts/components.mdのRankPokemonList契約に従う
+- [X] T017 [US3] Add RankPokemonList to detail page in `apps/web/src/app/islands/[id]/page.tsx` — pokemonMap構築（getAllPokemon→Map変換）、RankPokemonListに渡す
 
 **Checkpoint**: US3完了 — フィールド詳細ページで全情報（基本情報・エナジー・出現ポケモン）が確認可能
 
@@ -105,9 +105,9 @@
 
 **Purpose**: ナビゲーション統合、全体の品質確認
 
-- [ ] T018 Update navigation links in `apps/web/src/components/navigation/navigation-links.ts` — 島ガイドリンクが正しく `/islands` を指していることを確認、必要に応じてアイコン・ラベルを調整
-- [ ] T019 Run Biome format and lint check with `bun check` from project root — 全ファイルがフォーマット・Lint規約に準拠
-- [ ] T020 Run full test suite with `cd apps/web && bun run test` — 全テストパス確認、既存テストへの回帰がないこと
+- [X] T018 Update navigation links in `apps/web/src/components/navigation/navigation-links.ts` — 島ガイドリンクが正しく `/islands` を指していることを確認、必要に応じてアイコン・ラベルを調整
+- [X] T019 Run Biome format and lint check with `bun check` from project root — 全ファイルがフォーマット・Lint規約に準拠
+- [X] T020 Run full test suite with `cd apps/web && bun run test` — 全テストパス確認、既存テストへの回帰がないこと
 
 ---
 
