@@ -105,13 +105,14 @@ describe("Navigation Integration Tests", () => {
       expect(screen.getByText("ホーム")).toBeInTheDocument();
     });
 
-    it("should render Islands page with placeholder", () => {
-      render(<IslandsPage />);
+    it("should render Islands page with island list", async () => {
+      const page = await IslandsPage();
+      render(page);
 
       expect(
         screen.getByRole("heading", { name: "島ガイド", level: 1 }),
       ).toBeInTheDocument();
-      expect(screen.getByText(/コンテンツは準備中です/i)).toBeInTheDocument();
+      expect(screen.getByText("ワカクサ本島")).toBeInTheDocument();
     });
 
     it("should render Berries page with berry list", () => {
