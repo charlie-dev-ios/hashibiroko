@@ -1,0 +1,232 @@
+{
+  "islands": [
+    {
+      "id": 1,
+      "name": "ワカクサ本島",
+      "description": "最初に訪れるフィールド。多くのポケモンが生息しており、毎週ランダムでカビゴンの好きなきのみが変わる。",
+      "specialtyBerry": "ランダム",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": [172]
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 16089,
+          "newPokemonIds": [25]
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 33526,
+          "newPokemonIds": [39]
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 65764,
+          "newPokemonIds": [133]
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 117524,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 206474,
+          "newPokemonIds": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "シアンの砂浜",
+      "description": "美しい砂浜が広がるフィールド。みずタイプのポケモンが多く生息している。",
+      "specialtyBerry": "オレンのみ",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": [25]
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 19227,
+          "newPokemonIds": [133]
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 42351,
+          "newPokemonIds": [26]
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 76618,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 134471,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 231174,
+          "newPokemonIds": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "トープ洞窟",
+      "description": "薄暗い洞窟のフィールド。どくタイプやいわタイプのポケモンが生息している。",
+      "specialtyBerry": "フィラのみ",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 22517,
+          "newPokemonIds": [26]
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 47329,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 85643,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 148217,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 252891,
+          "newPokemonIds": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "ウノハナ雪原",
+      "description": "一面の雪に覆われたフィールド。こおりタイプのポケモンが多く見られる。",
+      "specialtyBerry": "チーゴのみ",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": [39]
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 25831,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 52466,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 93825,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 162304,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 278612,
+          "newPokemonIds": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "ラピスラズリ湖畔",
+      "description": "澄み切った湖のほとりに広がるフィールド。くさタイプやかくとうタイプのポケモンが生息している。",
+      "specialtyBerry": "ドリのみ",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 28943,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 58107,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 102356,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 176892,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 301547,
+          "newPokemonIds": []
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "ゴールド旧発電所",
+      "description": "かつて稼働していた発電所跡地のフィールド。でんきタイプのポケモンが多く生息している。",
+      "specialtyBerry": "ベリブのみ",
+      "snorlaxRanks": [
+        {
+          "rank": "ノーマル",
+          "requiredEnergy": 0,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "いいかんじ",
+          "requiredEnergy": 32156,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "すごいぞ",
+          "requiredEnergy": 64523,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "とてもすごい",
+          "requiredEnergy": 115782,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "ハイパー",
+          "requiredEnergy": 193641,
+          "newPokemonIds": []
+        },
+        {
+          "rank": "マスター",
+          "requiredEnergy": 328459,
+          "newPokemonIds": []
+        }
+      ]
+    }
+  ]
+}
