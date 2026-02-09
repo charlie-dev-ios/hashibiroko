@@ -35,15 +35,15 @@
 
 ### Tests (Red phase)
 
-- [ ] T001 Update SnorlaxRankTierSchema tests: replace 6 rank name enum tests with 4 tier name enum tests (ノーマル/スーパー/ハイパー/マスター), add rejection test for old names (いいかんじ, すごいぞ, とてもすごい) in `apps/web/tests/unit/lib/schemas/island.test.ts`
-- [ ] T002 Update SnorlaxRankSchema tests: add tests for new fields `rankTier`, `rankNumber`, `dreamShards`, test validation for rankNumber range (1-5 for ノーマル/スーパー/ハイパー, 1-20 for マスター), test dreamShards >= 0 in `apps/web/tests/unit/lib/schemas/island.test.ts`
-- [ ] T003 Update IslandSchema tests: change `.length(6)` expectation to `.length(35)`, update mock data to 35 ranks with new field structure in `apps/web/tests/unit/lib/schemas/island.test.ts`
+- [x] T001 Update SnorlaxRankTierSchema tests: replace 6 rank name enum tests with 4 tier name enum tests (ノーマル/スーパー/ハイパー/マスター), add rejection test for old names (いいかんじ, すごいぞ, とてもすごい) in `apps/web/tests/unit/lib/schemas/island.test.ts`
+- [x] T002 Update SnorlaxRankSchema tests: add tests for new fields `rankTier`, `rankNumber`, `dreamShards`, test validation for rankNumber range (1-5 for ノーマル/スーパー/ハイパー, 1-20 for マスター), test dreamShards >= 0 in `apps/web/tests/unit/lib/schemas/island.test.ts`
+- [x] T003 Update IslandSchema tests: change `.length(6)` expectation to `.length(35)`, update mock data to 35 ranks with new field structure in `apps/web/tests/unit/lib/schemas/island.test.ts`
 
 ### Implementation (Green phase)
 
-- [ ] T004 Update Zod schemas: rename `SnorlaxRankNameSchema` to `SnorlaxRankTierSchema` with 4 values (ノーマル/スーパー/ハイパー/マスター), add `rankNumber` (z.number().int().positive()), add `dreamShards` (z.number().int().nonnegative()), rename `rank` to `rankTier`, change `.length(6)` to `.length(35)`, update type exports in `apps/web/src/lib/schemas/island.ts`
-- [ ] T005 Update islands.json with real game data for all 6 fields × 35 ranks each (210 total rank entries) with rankTier, rankNumber, requiredEnergy, dreamShards fields. Use data from `specs/030-update-snorlax-ratings/research.md`. Set newPokemonIds to empty arrays for all ranks in `apps/web/src/content/islands/islands.json`
-- [ ] T006 Update data access layer tests: update mock data fixtures to use new 35-rank structure with rankTier/rankNumber/dreamShards fields in `apps/web/tests/unit/lib/data/islands.test.ts`
+- [x] T004 Update Zod schemas: rename `SnorlaxRankNameSchema` to `SnorlaxRankTierSchema` with 4 values (ノーマル/スーパー/ハイパー/マスター), add `rankNumber` (z.number().int().positive()), add `dreamShards` (z.number().int().nonnegative()), rename `rank` to `rankTier`, change `.length(6)` to `.length(35)`, update type exports in `apps/web/src/lib/schemas/island.ts`
+- [x] T005 Update islands.json with real game data for all 6 fields × 35 ranks each (210 total rank entries) with rankTier, rankNumber, requiredEnergy, dreamShards fields. Use data from `specs/030-update-snorlax-ratings/research.md`. Set newPokemonIds to empty arrays for all ranks in `apps/web/src/content/islands/islands.json`
+- [x] T006 Update data access layer tests: update mock data fixtures to use new 35-rank structure with rankTier/rankNumber/dreamShards fields in `apps/web/tests/unit/lib/data/islands.test.ts`
 
 **Checkpoint**: Schema tests pass, JSON data validates against new schema, data access layer tests pass.
 
@@ -59,11 +59,11 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T007 [US1] Update snorlax-rank-table tests: test that rank name displays as `{rankTier} {rankNumber}` format (e.g., "ノーマル 3"), test that 報酬 (dreamShards) column exists and displays values with toLocaleString formatting, test that all 35 ranks render, update mock data to new structure in `apps/web/tests/unit/components/islands/snorlax-rank-table.test.tsx`
+- [x] T007 [US1] Update snorlax-rank-table tests: test that rank name displays as `{rankTier} {rankNumber}` format (e.g., "ノーマル 3"), test that 報酬 (dreamShards) column exists and displays values with toLocaleString formatting, test that all 35 ranks render, update mock data to new structure in `apps/web/tests/unit/components/islands/snorlax-rank-table.test.tsx`
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Update SnorlaxRankTable component: change rank column to display `{rankTier} {rankNumber}`, add third column header "報酬" for dreamShards, display dreamShards with toLocaleString formatting, update key from `rank.rank` to `${rank.rankTier}-${rank.rankNumber}` in `apps/web/src/components/islands/snorlax-rank-table.tsx`
+- [x] T008 [US1] Update SnorlaxRankTable component: change rank column to display `{rankTier} {rankNumber}`, add third column header "報酬" for dreamShards, display dreamShards with toLocaleString formatting, update key from `rank.rank` to `${rank.rankTier}-${rank.rankNumber}` in `apps/web/src/components/islands/snorlax-rank-table.tsx`
 
 **Checkpoint**: SnorlaxRankTable renders 35 ranks with tier+number names, energy, and dream shard rewards. All rank table tests pass.
 
@@ -79,11 +79,11 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T009 [US2] Update rank-pokemon-list tests: test that rank heading displays as `{rankTier} {rankNumber}` format, test that all 35 ranks render, update mock data to new structure with rankTier/rankNumber fields, update key expectations in `apps/web/tests/unit/components/islands/rank-pokemon-list.test.tsx`
+- [x] T009 [US2] Update rank-pokemon-list tests: test that rank heading displays as `{rankTier} {rankNumber}` format, test that all 35 ranks render, update mock data to new structure with rankTier/rankNumber fields, update key expectations in `apps/web/tests/unit/components/islands/rank-pokemon-list.test.tsx`
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Update RankPokemonList component: change heading from `rank.rank` to `${rank.rankTier} ${rank.rankNumber}`, update key from `rank.rank` to `${rank.rankTier}-${rank.rankNumber}` in `apps/web/src/components/islands/rank-pokemon-list.tsx`
+- [x] T010 [US2] Update RankPokemonList component: change heading from `rank.rank` to `${rank.rankTier} ${rank.rankNumber}`, update key from `rank.rank` to `${rank.rankTier}-${rank.rankNumber}` in `apps/web/src/components/islands/rank-pokemon-list.tsx`
 
 **Checkpoint**: RankPokemonList renders 35 ranks with correct tier+number headings. All pokemon list tests pass.
 
@@ -93,10 +93,10 @@
 
 **Purpose**: Verify everything works together end-to-end.
 
-- [ ] T011 Run all unit tests via `cd apps/web && bun run test` and fix any failures
-- [ ] T012 Run type checking via `bun run typecheck` and fix any type errors
-- [ ] T013 Run build via `bun run build` and verify no build errors
-- [ ] T014 Manually verify island detail page renders correctly with new 35-rank data for at least ワカクサ本島 and ゴールド旧発電所
+- [x] T011 Run all unit tests via `cd apps/web && bun run test` and fix any failures
+- [x] T012 Run type checking via `bun run typecheck` and fix any type errors
+- [x] T013 Run build via `bun run build` and verify no build errors
+- [x] T014 Manually verify island detail page renders correctly with new 35-rank data for at least ワカクサ本島 and ゴールド旧発電所
 
 ---
 
