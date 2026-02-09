@@ -1,0 +1,161 @@
+{
+  "natures": [
+    {
+      "name": "さみしがり",
+      "increasedStat": "helpingSpeed",
+      "decreasedStat": "ingredientRate"
+    },
+    {
+      "name": "いじっぱり",
+      "increasedStat": "helpingSpeed",
+      "decreasedStat": "mainSkillRate"
+    },
+    {
+      "name": "やんちゃ",
+      "increasedStat": "helpingSpeed",
+      "decreasedStat": "expGain"
+    },
+    {
+      "name": "ゆうかん",
+      "increasedStat": "helpingSpeed",
+      "decreasedStat": "energyRecovery"
+    },
+    {
+      "name": "ずぶとい",
+      "increasedStat": "ingredientRate",
+      "decreasedStat": "helpingSpeed"
+    },
+    {
+      "name": "わんぱく",
+      "increasedStat": "ingredientRate",
+      "decreasedStat": "mainSkillRate"
+    },
+    {
+      "name": "のうてんき",
+      "increasedStat": "ingredientRate",
+      "decreasedStat": "expGain"
+    },
+    {
+      "name": "のんき",
+      "increasedStat": "ingredientRate",
+      "decreasedStat": "energyRecovery"
+    },
+    {
+      "name": "ひかえめ",
+      "increasedStat": "mainSkillRate",
+      "decreasedStat": "helpingSpeed"
+    },
+    {
+      "name": "おっとり",
+      "increasedStat": "mainSkillRate",
+      "decreasedStat": "ingredientRate"
+    },
+    {
+      "name": "うっかりや",
+      "increasedStat": "mainSkillRate",
+      "decreasedStat": "expGain"
+    },
+    {
+      "name": "れいせい",
+      "increasedStat": "mainSkillRate",
+      "decreasedStat": "energyRecovery"
+    },
+    {
+      "name": "おだやか",
+      "increasedStat": "expGain",
+      "decreasedStat": "helpingSpeed"
+    },
+    {
+      "name": "おとなしい",
+      "increasedStat": "expGain",
+      "decreasedStat": "ingredientRate"
+    },
+    {
+      "name": "しんちょう",
+      "increasedStat": "expGain",
+      "decreasedStat": "mainSkillRate"
+    },
+    {
+      "name": "なまいき",
+      "increasedStat": "expGain",
+      "decreasedStat": "energyRecovery"
+    },
+    {
+      "name": "おくびょう",
+      "increasedStat": "energyRecovery",
+      "decreasedStat": "helpingSpeed"
+    },
+    {
+      "name": "ようき",
+      "increasedStat": "energyRecovery",
+      "decreasedStat": "ingredientRate"
+    },
+    {
+      "name": "むじゃき",
+      "increasedStat": "energyRecovery",
+      "decreasedStat": "mainSkillRate"
+    },
+    {
+      "name": "せっかち",
+      "increasedStat": "energyRecovery",
+      "decreasedStat": "expGain"
+    },
+    {
+      "name": "がんばりや",
+      "increasedStat": "helpingSpeed",
+      "decreasedStat": "helpingSpeed"
+    },
+    {
+      "name": "すなお",
+      "increasedStat": "ingredientRate",
+      "decreasedStat": "ingredientRate"
+    },
+    {
+      "name": "てれや",
+      "increasedStat": "mainSkillRate",
+      "decreasedStat": "mainSkillRate"
+    },
+    {
+      "name": "きまぐれ",
+      "increasedStat": "expGain",
+      "decreasedStat": "expGain"
+    },
+    {
+      "name": "まじめ",
+      "increasedStat": "energyRecovery",
+      "decreasedStat": "energyRecovery"
+    }
+  ],
+  "statEffects": [
+    {
+      "stat": "helpingSpeed",
+      "label": "おてつだいスピード",
+      "increasedEffect": "おてつだい時間が約2%短縮",
+      "decreasedEffect": "おてつだい時間が約2%延長"
+    },
+    {
+      "stat": "ingredientRate",
+      "label": "食材お手伝い確率",
+      "increasedEffect": "食材を見つける確率が約18%上昇",
+      "decreasedEffect": "食材を見つける確率が約18%下降"
+    },
+    {
+      "stat": "mainSkillRate",
+      "label": "メインスキル発動確率",
+      "increasedEffect": "メインスキルの発動確率が約18%上昇",
+      "decreasedEffect": "メインスキルの発動確率が約18%下降"
+    },
+    {
+      "stat": "expGain",
+      "label": "EXP獲得量",
+      "increasedEffect": "獲得EXPが約18%増加",
+      "decreasedEffect": "獲得EXPが約18%減少"
+    },
+    {
+      "stat": "energyRecovery",
+      "label": "げんき回復量",
+      "increasedEffect": "げんき回復量が約18%増加",
+      "decreasedEffect": "げんき回復量が約18%減少"
+    }
+  ]
+}

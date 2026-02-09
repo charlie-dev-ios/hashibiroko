@@ -7,6 +7,7 @@ import {
   Egg,
   Home,
   Map as MapIcon,
+  Sparkles,
   Users,
 } from "lucide-react";
 
@@ -70,6 +71,12 @@ export const navigationSections: NavigationSection[] = [
         href: "/recipes",
         description: "レシピときのみの詳細データ",
         icon: ChefHat,
+      },
+      {
+        title: "せいかく",
+        href: "/natures",
+        description: "せいかくによるパラメータ補正の一覧",
+        icon: Sparkles,
       },
     ],
   },
