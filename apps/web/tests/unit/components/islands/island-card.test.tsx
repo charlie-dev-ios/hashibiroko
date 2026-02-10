@@ -56,7 +56,9 @@ describe("IslandCard", () => {
   it("should display fixed berry names", () => {
     render(<IslandCard island={mockIslandWithFixedBerry} />);
 
-    expect(screen.getByText(/オレンのみ、モモンのみ、シーヤのみ/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/オレンのみ、モモンのみ、シーヤのみ/),
+    ).toBeInTheDocument();
   });
 
   it("should have link to island detail page", () => {
