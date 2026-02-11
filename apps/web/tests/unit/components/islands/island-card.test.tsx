@@ -3,26 +3,41 @@ import { describe, expect, it } from "vitest";
 import IslandCard from "@/components/islands/island-card";
 import type { Island } from "@/lib/schemas/island";
 
+function generateSnorlaxRanks(): Island["snorlaxRanks"] {
+  const tiers = [
+    { tier: "ノーマル" as const, count: 5 },
+    { tier: "スーパー" as const, count: 5 },
+    { tier: "ハイパー" as const, count: 5 },
+    { tier: "マスター" as const, count: 20 },
+  ];
+  const ranks: Island["snorlaxRanks"] = [];
+  for (const { tier, count } of tiers) {
+    for (let i = 1; i <= count; i++) {
+      ranks.push({
+        rankTier: tier,
+        rankNumber: i,
+        requiredEnergy: ranks.length * 10000,
+        dreamShards: ranks.length * 10,
+        newPokemonIds: [],
+      });
+    }
+  }
+  return ranks;
+}
+
 const mockIsland: Island = {
   id: 1,
   name: "ワカクサ本島",
   description: "最初に訪れるフィールド。",
-  specialtyBerry: "ランダム",
-  snorlaxRanks: [
-    { rank: "ノーマル", requiredEnergy: 0, newPokemonIds: [172] },
-    { rank: "いいかんじ", requiredEnergy: 16089, newPokemonIds: [25] },
-    { rank: "すごいぞ", requiredEnergy: 33526, newPokemonIds: [39] },
-    { rank: "とてもすごい", requiredEnergy: 65764, newPokemonIds: [133] },
-    { rank: "ハイパー", requiredEnergy: 117524, newPokemonIds: [] },
-    { rank: "マスター", requiredEnergy: 206474, newPokemonIds: [] },
-  ],
+  specialtyBerries: ["ランダム"],
+  snorlaxRanks: generateSnorlaxRanks(),
 };
 
 const mockIslandWithFixedBerry: Island = {
   ...mockIsland,
   id: 2,
   name: "シアンの砂浜",
-  specialtyBerry: "オレンのみ",
+  specialtyBerries: ["オレンのみ", "モモンのみ", "シーヤのみ"],
 };
 
 describe("IslandCard", () => {
@@ -38,10 +53,12 @@ describe("IslandCard", () => {
     expect(screen.getByText(/ランダム/)).toBeInTheDocument();
   });
 
-  it("should display fixed berry name", () => {
+  it("should display fixed berry names", () => {
     render(<IslandCard island={mockIslandWithFixedBerry} />);
 
-    expect(screen.getByText(/オレンのみ/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/オレンのみ、モモンのみ、シーヤのみ/),
+    ).toBeInTheDocument();
   });
 
   it("should have link to island detail page", () => {

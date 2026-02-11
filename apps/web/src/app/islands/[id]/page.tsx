@@ -27,7 +27,7 @@ export async function generateMetadata({
 
   return {
     title: `${island.name} | 島ガイド | ポケモンスリープ攻略サイト`,
-    description: `${island.name}の詳細情報。とくいきのみ: ${island.specialtyBerry}。カビゴン評価ごとの必要エナジーと出現ポケモンを確認できます。`,
+    description: `${island.name}の詳細情報。とくいきのみ: ${island.specialtyBerries.join("、")}。カビゴン評価ごとの必要エナジーと出現ポケモンを確認できます。`,
   };
 }
 
@@ -78,7 +78,7 @@ export default async function IslandDetailPage({
           <h2 className="text-2xl font-semibold mb-4">基本情報</h2>
           <div className="text-sm">
             <span className="font-medium">とくいきのみ:</span>{" "}
-            {island.specialtyBerry}
+            {island.specialtyBerries.join("、")}
           </div>
         </section>
 

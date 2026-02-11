@@ -21,7 +21,7 @@ export default function IslandCard({ island }: IslandCardProps) {
         <CardContent>
           <div className="text-sm">
             <span className="font-medium">とくいきのみ:</span>{" "}
-            {island.specialtyBerry}
+            {island.specialtyBerries.join("、")}
           </div>
         </CardContent>
       </Card>

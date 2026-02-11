@@ -13,8 +13,10 @@ export default function RankPokemonList({
   return (
     <div className="space-y-4">
       {ranks.map((rank) => (
-        <div key={rank.rank}>
-          <h3 className="font-semibold mb-2">{rank.rank}</h3>
+        <div key={`${rank.rankTier}-${rank.rankNumber}`}>
+          <h3 className="font-semibold mb-2">
+            {rank.rankTier} {rank.rankNumber}
+          </h3>
           {rank.newPokemonIds.length === 0 ? (
             <p className="text-sm text-muted-foreground">なし</p>
           ) : (

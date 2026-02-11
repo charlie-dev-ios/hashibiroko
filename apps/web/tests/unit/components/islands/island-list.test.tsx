@@ -3,28 +3,43 @@ import { describe, expect, it } from "vitest";
 import IslandList from "@/components/islands/island-list";
 import type { Island } from "@/lib/schemas/island";
 
-const snorlaxRanks: Island["snorlaxRanks"] = [
-  { rank: "ノーマル", requiredEnergy: 0, newPokemonIds: [] },
-  { rank: "いいかんじ", requiredEnergy: 16089, newPokemonIds: [] },
-  { rank: "すごいぞ", requiredEnergy: 33526, newPokemonIds: [] },
-  { rank: "とてもすごい", requiredEnergy: 65764, newPokemonIds: [] },
-  { rank: "ハイパー", requiredEnergy: 117524, newPokemonIds: [] },
-  { rank: "マスター", requiredEnergy: 206474, newPokemonIds: [] },
-];
+function generateSnorlaxRanks(): Island["snorlaxRanks"] {
+  const tiers = [
+    { tier: "ノーマル" as const, count: 5 },
+    { tier: "スーパー" as const, count: 5 },
+    { tier: "ハイパー" as const, count: 5 },
+    { tier: "マスター" as const, count: 20 },
+  ];
+  const ranks: Island["snorlaxRanks"] = [];
+  for (const { tier, count } of tiers) {
+    for (let i = 1; i <= count; i++) {
+      ranks.push({
+        rankTier: tier,
+        rankNumber: i,
+        requiredEnergy: ranks.length * 10000,
+        dreamShards: ranks.length * 10,
+        newPokemonIds: [],
+      });
+    }
+  }
+  return ranks;
+}
+
+const snorlaxRanks = generateSnorlaxRanks();
 
 const mockIslands: Island[] = [
   {
     id: 1,
     name: "ワカクサ本島",
     description: "最初に訪れるフィールド。",
-    specialtyBerry: "ランダム",
+    specialtyBerries: ["ランダム"],
     snorlaxRanks,
   },
   {
     id: 2,
     name: "シアンの砂浜",
     description: "美しい砂浜が広がるフィールド。",
-    specialtyBerry: "オレンのみ",
+    specialtyBerries: ["オレンのみ", "モモンのみ", "シーヤのみ"],
     snorlaxRanks,
   },
 ];
