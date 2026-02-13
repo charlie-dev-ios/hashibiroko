@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import CollapsibleSection from "@/components/islands/collapsible-section";
 import RankPokemonList from "@/components/islands/rank-pokemon-list";
 import SnorlaxRankTable from "@/components/islands/snorlax-rank-table";
 import Breadcrumb from "@/components/navigation/breadcrumb";
@@ -83,16 +84,18 @@ export default async function IslandDetailPage({
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4">カビゴン評価</h2>
-          <SnorlaxRankTable ranks={island.snorlaxRanks} />
+          <CollapsibleSection title="出現ポケモン">
+            <RankPokemonList
+              ranks={island.snorlaxRanks}
+              pokemonMap={pokemonMap}
+            />
+          </CollapsibleSection>
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4">出現ポケモン</h2>
-          <RankPokemonList
-            ranks={island.snorlaxRanks}
-            pokemonMap={pokemonMap}
-          />
+          <CollapsibleSection title="カビゴン評価">
+            <SnorlaxRankTable ranks={island.snorlaxRanks} />
+          </CollapsibleSection>
         </section>
       </div>
     </div>
